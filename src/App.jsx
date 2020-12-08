@@ -7,20 +7,23 @@ import Calendar from './modules/calendar/Calendar.jsx';
 import Filter from './modules/filter/Filter.jsx';
 // import Timetabel from './modules/timetable/Timetabel.jsx';
 import ToDoList from './modules/toDoList/ToDoList.jsx';
+import { NoteContextProvider, initialNoteState, noteReducer } from './modules/Contexts/NoteContext.jsx';
 
 function App() {
+  const containerClasses = ['container'];
+
+
+
   return (
-    <div className="wrapper">
-      <div className="container">
-        <Calendar/>
-        <ToDoList/>
-        {/* <Filter/> */}
-        <Note/>
-        {/* <AddToDo/> */}
-        {/* <AboutEvent/> */}
-        {/* <Timetabel/> */}
+    <NoteContextProvider reducer={noteReducer} initState={initialNoteState} >
+      <div className="wrapper">
+        <div className="container">
+          <Calendar />
+          <ToDoList />
+          <Note />
+        </div>
       </div>
-    </div>
+    </NoteContextProvider>
   );
 }
 

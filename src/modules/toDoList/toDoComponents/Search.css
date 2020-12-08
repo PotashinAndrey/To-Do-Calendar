@@ -1,0 +1,11 @@
+.search  {
+  display: flex;
+  align-items: center;
+  max-height: ww5px;
+  justify-items: center;
+}
+
+.searchinput {
+  flex-grow: 1;
+  height: 30px;
+}

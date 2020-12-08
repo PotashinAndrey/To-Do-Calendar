@@ -1,0 +1,12 @@
+.checkbox {
+  align-self: center;
+  justify-self: center;
+  border: 2px solid black;
+  border-radius: 5px;
+  width: 20px;
+  height: 20px;
+}
+
+.done {
+  background-color: blue;
+}

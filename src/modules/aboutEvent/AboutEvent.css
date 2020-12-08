@@ -1,0 +1,28 @@
+.aboutevent {
+  border-top: 1px solid black;
+  height: 100%;
+}
+
+.aboutevent-span {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.aboutevent-span > h2 {
+  padding: 5px;
+  margin-left: 12px;
+  justify-self: start;
+  align-self: center;
+}
+
+.aboutevent-span > p {
+  padding: 5px;
+  margin-right: 12px;
+  justify-self: end;
+  align-self: center;
+}
+
+.aboutevent-p {
+  margin: 0;
+  padding: 10px;
+}

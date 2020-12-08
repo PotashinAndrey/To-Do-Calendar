@@ -1,0 +1,5 @@
+.listheader {
+  display: grid;
+  grid-template-columns: 1fr 3fr 4fr 3fr;
+  border-bottom: 1px solid black;
+}

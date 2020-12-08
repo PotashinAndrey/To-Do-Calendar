@@ -11,6 +11,10 @@ textarea {
   flex-grow: 2;
 }
 
+.notename {
+  height: 25px;
+}
+
 button {
   height: 34px;
   background-color: white;
