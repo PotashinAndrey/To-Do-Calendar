@@ -2,13 +2,5 @@
   border: 1px solid #ccc;
   box-shadow: 0 4px 4px 0 #666;
   display: grid;
-}
-
-.editopen {
-  grid-template-rows: 1fr 1fr 9fr 5fr;
-}
-
-.editclose {
   grid-template-rows: 1fr 1fr 14fr;
 }
-

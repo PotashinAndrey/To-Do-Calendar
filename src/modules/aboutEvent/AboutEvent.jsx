@@ -1,23 +1,114 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './AboutEvent.css';
+import Selector from '../utils/Selector.jsx';
 import useNoteContext from '../Contexts/NoteContext.jsx';
 
-export default function AboutEvent({ itemId }) {
+export default function AboutEvent() {
   const { noteState, noteDispatch } = useNoteContext();
+  const [name, setName] = useState(noteState.currentNote.name);
+  const [discription, setDiscription] = useState(noteState.currentNote.discription);
+  const [priority, setPriority] = useState(noteState.currentNote.priority);
+  const [state, setState] = useState(noteState.currentNote.state);
+  const [children, setChildren] = useState(noteState.currentNote.children);
+  const [deadline, setDeadline] = useState(noteState.currentNote.deadline);
+  const [cost, setCost] = useState(noteState.currentNote.cost);
 
-  const note = noteState.notes.filter(e => e.id === itemId)[0];
+  useEffect(() => {
+    setName(noteState.currentNote.name);
+    setDiscription(noteState.currentNote.discription);
+    setPriority(noteState.currentNote.priority);
+    setState(noteState.currentNote.state);
+    setChildren(noteState.currentNote.children);
+    setDeadline(noteState.currentNote.deadline);
+    setCost(noteState.currentNote.cost);
+  }, [noteState]);
 
-  if (note === undefined) throw new Error('нет переданного идентификатора');
+  function closeAboutEvent() {
+    noteDispatch({ currentNote: null });
+  }
 
-  console.log(note);
+  function saveHandler() {
+    noteDispatch({
+      time: noteState.currentNote.time,
+      children: [],
+      state: state,
+      priority: priority,
+      id: noteState.currentNote.id,
+      name: name,
+      discription: discription,
+      deadline: [],
+      cost: cost
+    });
+  }
+
+  function deleteHandler() {
+    noteDispatch({
+      id: noteState.currentNote.id,
+      deleted: true
+    });
+    closeAboutEvent();
+  }
+
+  const priorityVariants = [
+    { text: 'Не выбран', color: 'gray' },
+    { text: 'Низкий',    color: 'green' },
+    { text: 'Средний',   color: 'yellow' },
+    { text: 'Высокий',   color: 'red' },
+  ]
+
+  const todoVariants = [
+    { text: 'Не выполнено', color: "rgb(240, 250, 105)" },
+    { text: 'Выполнено', color: 'rgba(118, 175, 127, 1)' },
+    { text: 'Отменено', color: 'rgba(200, 200, 200, 1)' }
+  ]
 
   return (
-    <div className="aboutevent" >
+    <div className="aboutevent note" >
       <span className="aboutevent-span">
-        <h2>{note.name}</h2>
-        <p>{note.time.toLocaleString()}</p>
+        <input className="aboutevent-name" value={name} onChange={e => setName(e.target.value)} />
+        <p>{noteState.currentNote.time.toLocaleString()}</p>
+        <img
+          src="https://img.icons8.com/metro/452/close-window.png"
+          alt="закрыть" onClick={closeAboutEvent}
+        />
       </span>
-      <p className="aboutevent-p">{note.discription}</p>
+
+      <textarea
+        onChange={e => setDiscription(e.target.value)}
+        value={discription}
+        className="aboutevent-textarea"
+        placeholder="Добавьте описание..."
+      ></textarea>
+
+      <div className="aboutevent-edit">
+        <span className="selectors">
+          <Selector text="Приоритет: " value={priority} variants={priorityVariants} onChange={setPriority} />
+          <Selector text="Состояние: " value={state} variants={todoVariants} onChange={setState} />
+        </span>
+
+        <span className="aboutevent-deadline">
+          <p>Выберете дату и время окночания: </p>
+           <button>Выбрать</button> {/*//!!!!!!!!!!!!!!!!!!!!!!!!!!!! */}
+        </span>
+
+        <span className="aboutevent-children">
+          <p>Установите цену: </p>
+          <input
+            className="aboutevent-cost"
+            type="text"
+            placeholder="Цена..."
+            value={cost} onChange={e => setCost(e.target.value)}
+          />
+          <p>Выберете подзадачи: </p>
+          <button>Выбрать</button> {/*//!!!!!!!!!!!!!!!!!!!!!!!!!! */}
+        </span>
+
+        <span className="aboutevent-delete">
+          <button onClick={saveHandler} >Сохранить</button>
+          <button onClick={deleteHandler}>Удалить задачу</button>
+        </span>
+
+      </div>
     </div>
   )
 }

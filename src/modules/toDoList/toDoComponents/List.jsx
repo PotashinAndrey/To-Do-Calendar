@@ -4,18 +4,18 @@ import ListHeader from './Listheader.jsx';
 import './List.css';
 import useNoteContext from '../../Contexts/NoteContext.jsx';
 
-export default function List({onClick}) {
+export default function List() {
   const { noteState, noteDispatch } = useNoteContext();
 
-  function changeNoteState() {
-
+  function changeNoteState(note) {
+    noteDispatch({currentNote: note});
   }
 
   const ListItems = noteState.notes.map((note) =>
     <ListItem
-      note={note}
+      noteId={note.id}
       key={note.id}
-      onClick={onClick}
+      onClick={changeNoteState}
     />);
 
   return (

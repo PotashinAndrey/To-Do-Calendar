@@ -1,11 +1,14 @@
 .aboutevent {
-  border-top: 1px solid black;
+  border: 1px solid #ccc;
+  box-shadow: 0 4px 4px 0 #666;
   height: 100%;
+
 }
 
 .aboutevent-span {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 6fr 6fr 1fr;
+  border-bottom: 1px solid gray;
 }
 
 .aboutevent-span > h2 {
@@ -22,7 +25,60 @@
   align-self: center;
 }
 
-.aboutevent-p {
+.aboutevent-span > img {
+  align-self: center;
+  justify-self: center;
+  width: 25px;
+  height: 25px;
+}
+
+.aboutevent-textarea {
+  width: 95.3%;
+  min-height: 200px;
   margin: 0;
   padding: 10px;
+}
+
+.aboutevent-name {
+  border: 0px solid transparent;
+  height: 25px;
+  align-self: center;
+  margin-left: 5px;
+  font-weight: bold;
+  font-size: larger;
+}
+
+.aboutevent-edit {
+  border-top: 1px solid gray ;
+}
+
+.selectors {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.aboutevent-deadline {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  border-bottom: 1px solid gray;
+}
+
+.aboutevent-children {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  justify-content: space-around;
+  border-bottom: 1px solid gray;
+  align-items: center;
+}
+
+.aboutevent-delete {
+  display: flex;
+  margin-top: 20px;
+  justify-content: center;
+  justify-content: space-around;
+}
+
+.aboutevent-cost {
+  border: 1ps solid black;
 }

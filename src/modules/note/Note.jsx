@@ -13,21 +13,24 @@ export default function Note() {
     const note = {
       time: new Date(),
       children: [],
-      steate: 'todo',
-      priority: null,
+      state: 'Не выполнено',
+      priority: 'Не выбран',
       id: uuidv4(),
       name: name,
       discription: discription,
-      deadline: []
+      deadline: [],
+      cost: 0
     }
 
     const notes = noteState.notes.concat(note);
 
     noteDispatch({ notes });
+    setName('');
+    setDiscription('');
   }
 
   return (
-    <div className="note">
+    <div className="note notewrapper">
       <label htmlFor="name">Введите название: </label>
       <input
         type="text"
@@ -35,10 +38,16 @@ export default function Note() {
         className="notename"
         onChange={e => setName(e.target.value)}
         value={name}
+        placeholder="Введите название..."
       />
       <hr />
       <label htmlFor="description">Введите описание:</label>
-      <textarea nam="description" value={discription} onChange={e => setDiscription(e.target.value)} ></textarea>
+      <textarea
+        nam="description"
+        value={discription}
+        onChange={e => setDiscription(e.target.value)}
+        placeholder="Введите описание..."
+      ></textarea>
       <button onClick={createNote} >Добавить</button>
     </div>
   )

@@ -1,20 +1,17 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './CheckBox.css';
 
-export default function CheckBox({done}) {
-  const [checked, setChecked] = useState(done);
-
-  const classes = ['checkbox'];
-
-  if (checked) {
-    classes.push('done');
-  }
-
-  function checkHandler() {
-    setChecked(prev => !prev);
+export default function CheckBox({ done, onClick }) {
+  function checkHandler(e) {
+    onClick(!done);
+    e.stopPropagation();
   }
 
   return (
-    <button className={classes.join(' ')} onClick={checkHandler} ></button>
+    <button
+      className="checkbox"
+      style={done ? { background: 'blue' } : null}
+      onClick={e => checkHandler(e)}
+    ></button>
   )
 }
