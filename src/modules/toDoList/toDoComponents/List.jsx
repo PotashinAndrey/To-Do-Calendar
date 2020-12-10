@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import ListItem from './ListItem.jsx';
 import ListHeader from './Listheader.jsx';
 import './List.css';
@@ -7,13 +7,17 @@ import useFilterContext from '../../Contexts/FilterContext.jsx';
 
 export default function List() {
   const { noteState, noteDispatch } = useNoteContext();
-  const {filterState, filterDispatch} = useFilterContext();
+  const { filterState, filterDispatch } = useFilterContext();
 
   function changeNoteState(note) {
-    noteDispatch({currentNote: note});
+    noteDispatch({ currentNote: note });
   }
 
-  const ListItems = (filterState.filterNotes.length > 0 ? filterState.filterNotes : noteState.notes ).map((note) =>
+  useEffect(() => {
+    filterDispatch(noteState);
+  }, [noteState]);
+
+  const ListItems = (filterState.filterNotes.length > 0 ? filterState.filterNotes : noteState.notes).map((note) =>
     <ListItem
       noteId={note.id}
       key={note.id}
