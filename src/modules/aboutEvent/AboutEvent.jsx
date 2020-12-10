@@ -44,7 +44,7 @@ export default function AboutEvent() {
       name: name,
       discription: discription,
       deadline: deadline,
-      cost: cost
+      cost: +cost
     });
     closeAboutEvent();
   }
