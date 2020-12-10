@@ -3,9 +3,9 @@ import './ChooseDate.css';
 import Grid from '../../calendar/calendarTable/Grid.jsx';
 import ChooseTime from './ChooseTime.jsx';
 
-export default function ChooseDate({ setDeadline }) {
-  const [date, setDate] = useState({month: 0, day: 0});
-  const [time, setTime] = useState({minutes: 0, hours: 0});
+export default function ChooseDate({ currentDate, setDeadline }) {
+  const [date, setDate] = useState({month: currentDate?.getMonth() || new Date().getMonth(), day: currentDate?.getDate() || new Date().getDate()});
+  const [time, setTime] = useState({minutes: currentDate?.getMinutes() || 0, hours: currentDate?.getHours() || 0});
 
   useEffect(() => {
     const deadline = new Date(new Date().getFullYear(), date.month, date.day, time.hours, time.minutes, 0, 0);

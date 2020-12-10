@@ -2,11 +2,16 @@ import React, { useState, useEffect } from 'react';
 import './Search.css';
 import useFilterContext from '../../Contexts/FilterContext.jsx';
 import useNoteContext from '../../Contexts/NoteContext.jsx';
+import Modal from '../../utils/Modal.jsx';
+import Portal from '../../Contexts/Portal.jsx';
+import Filter from '../../filter/Filter.jsx';
 
 export default function Search() {
   const [findedByName, setFindedByName] = useState('');
-  const {filterState, filterDispatch} = useFilterContext();
-  const {noteState, noteDispatch} = useNoteContext();
+  const [openModalDatePortal, setOpenModalDatePortal] = useState(null);
+
+  const {filterDispatch} = useFilterContext();
+  const {noteState} = useNoteContext();
 
   useEffect(() => {
     filterDispatch({
@@ -20,6 +25,18 @@ export default function Search() {
     });
   }, [findedByName]);
 
+  function setFilters() {
+    setOpenModalDatePortal(<Portal id="root">
+    <Modal
+      text={{ header: 'Фильры', main: 'Выберете фильры поиска'}}
+      isOpen={true}
+      onClick={() => setOpenModalDatePortal(null)}
+    >
+      <Filter />
+    </Modal>
+  </Portal>);
+  }
+
   return (
     <div className="search">
       <input
@@ -28,7 +45,8 @@ export default function Search() {
         className="searchinput"
         onChange={e => setFindedByName(e.target.value)}
       />
-      <button>Фильры</button>
+      <button onClick={setFilters} >Фильтры</button>
+      {openModalDatePortal}
     </div>
   )
 }

@@ -20,14 +20,10 @@ const filterReducer = (state, action = initialFilterState) => {
       const filtred = action.notes.filter(e => e.name.includes(filters.name));
       const data = {filterNotes: filtred, filters: filters};
 
-      console.log(data);
-
       return data;
     }
     const filtred = action.notes.filter(e => e.name.includes(state.filters.name));
     const data = {...state, ...{filterNotes: filtred}};
-
-    console.log(data);
 
     return data;
   }

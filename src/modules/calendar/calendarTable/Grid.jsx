@@ -4,7 +4,7 @@ import DayItem from './items/DayItem.jsx';
 import Item from './items/Item.jsx';
 
 export default function Grid({ rows, columns, onClick }) {
-  const [activeItem, setActiveItem] = useState({});
+  const [activeItem, setActiveItem] = useState({day: new Date().getDate(), month: 0 });
 
   let grid = [];
   const monthData = calculateMonth();

@@ -64,7 +64,7 @@ export default function AboutEvent() {
         isOpen={true}
         onClick={() => setOpenModalDatePortal(null)}
       >
-        <ChooseDate setDeadline={setDeadline} />
+        <ChooseDate currentDate={deadline} setDeadline={setDeadline} />
       </Modal>
     </Portal>);
   }

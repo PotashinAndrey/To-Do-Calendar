@@ -17,7 +17,7 @@ export default function List() {
     filterDispatch(noteState);
   }, [noteState]);
 
-  const ListItems = (filterState.filterNotes.length > 0 ? filterState.filterNotes : noteState.notes).map((note) =>
+  const ListItems = (filterState.filterNotes.length >= 0 ? filterState.filterNotes : noteState.notes).map((note) =>
     <ListItem
       noteId={note.id}
       key={note.id}
@@ -27,7 +27,7 @@ export default function List() {
   return (
     <div className="itemslist">
       <ListHeader />
-      {ListItems}
+      {ListItems.length === 0 && noteState.notes.length !== 0 ? <p>Ничего не найдено</p> : ListItems }
     </div>
   )
 }
