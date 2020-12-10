@@ -1,23 +1,23 @@
 import React, { useState } from 'react';
 import './Modal.css';
 
-export default function Modal({ children, text = null, onClick }) {
-  const [open, setOpen] = useState(true);
+export default function Modal({ children, text = null, onClick, isOpen}) {
+  if (isOpen) {
 
-  if (open) {
+
     return (
-      <div className="main">
-        <div className="body" >
+      <div className="main" onClick={() => onClick()}>
+        <div className="body" onClick={e => e.stopPropagation()} >
           <h1>{text.header }</h1>
           <p>{text.main}</p>
           {children}
-          <Button onClick={() => onClick()}>Закрыть</Button>
+          <button onClick={() => onClick()}>Закрыть</button>
         </div>
       </div>
     )
   } else {
     return (
-      <></>
+      null
     )
   }
 }

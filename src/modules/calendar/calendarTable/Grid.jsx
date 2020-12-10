@@ -1,26 +1,54 @@
-import React from 'react';
+import React, { useState } from 'react';
 import calculateMonth from './calculateMonth.js';
 import DayItem from './items/DayItem.jsx';
 import Item from './items/Item.jsx';
 
-export default function Grid({rows, columns}) {
+export default function Grid({ rows, columns, onClick }) {
+  const [activeItem, setActiveItem] = useState({});
+
   let grid = [];
   const monthData = calculateMonth();
 
-  for (let i = 0; i < monthData.week.length; i++ ) {
-    grid.push(<DayItem dayOfWeek={monthData.week[i]} key={i}/>);
+  function itemClick(day, month, monthDelta) {
+    onClick({day: day, month: month + monthDelta});
+    setActiveItem({day: day, month: monthDelta});
+  }
+
+  for (let i = 0; i < monthData.week.length; i++) {
+    grid.push(<DayItem dayOfWeek={monthData.week[i]} key={i} />);
   }
 
   for (let i = 0; i < monthData.beforeDays.length; i++) {
-    grid.push(<Item day={monthData.beforeDays[i]} key={10 + i}/>);
+    grid.push(<Item
+      day={monthData.beforeDays[i]}
+      month={monthData.month}
+      monthDelta={-1}
+      key={'beforeDays' + i}
+      onClick={itemClick}
+      activeItem={activeItem}
+    />);
   }
 
   for (let i = 0; i < monthData.nowDays.length; i++) {
-    grid.push(<Item day={monthData.nowDays[i]} key={100 + i}/>);
+    grid.push(<Item
+      day={monthData.nowDays[i]}
+      month={monthData.month}
+      monthDelta={0}
+      key={'nowDays' + i}
+      onClick={itemClick}
+      activeItem={activeItem}
+    />);
   }
 
   for (let i = 0; i < monthData.nextDays.length; i++) {
-    grid.push(<Item day={monthData.nextDays[i]} key={1000 + i} />);
+    grid.push(<Item
+      day={monthData.nextDays[i]}
+      month={monthData.month}
+      monthDelta={1}
+      key={'nextDays' + i}
+      onClick={itemClick}
+      activeItem={activeItem}
+    />);
   }
 
   let numOfColumns = '';
@@ -38,10 +66,8 @@ export default function Grid({rows, columns}) {
     display: "grid",
     gridTemplateColumns: numOfColumns,
     gridTemplateRows: numOfRows,
-    height: '100%'
+    height: '100%',
   }
-
-  // console.log(grid);
 
   return (
     <div style={style}>

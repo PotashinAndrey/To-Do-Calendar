@@ -18,7 +18,7 @@ export default function Note() {
       id: uuidv4(),
       name: name,
       discription: discription,
-      deadline: [],
+      deadline: null,
       cost: 0
     }
 

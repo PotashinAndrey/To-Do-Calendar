@@ -2,9 +2,13 @@ import React, { useState, useEffect } from 'react';
 import './AboutEvent.css';
 import Selector from '../utils/Selector.jsx';
 import useNoteContext from '../Contexts/NoteContext.jsx';
+import Portal from '../Contexts/Portal.jsx';
+import Modal from '../utils/Modal';
+import ChooseDate from '../utils/ChooseDate/ChooseDate.jsx';
 
 export default function AboutEvent() {
   const { noteState, noteDispatch } = useNoteContext();
+
   const [name, setName] = useState(noteState.currentNote.name);
   const [discription, setDiscription] = useState(noteState.currentNote.discription);
   const [priority, setPriority] = useState(noteState.currentNote.priority);
@@ -12,6 +16,8 @@ export default function AboutEvent() {
   const [children, setChildren] = useState(noteState.currentNote.children);
   const [deadline, setDeadline] = useState(noteState.currentNote.deadline);
   const [cost, setCost] = useState(noteState.currentNote.cost);
+
+  const [openModalDatePortal, setOpenModalDatePortal] = useState(null);
 
   useEffect(() => {
     setName(noteState.currentNote.name);
@@ -22,6 +28,7 @@ export default function AboutEvent() {
     setDeadline(noteState.currentNote.deadline);
     setCost(noteState.currentNote.cost);
   }, [noteState]);
+
 
   function closeAboutEvent() {
     noteDispatch({ currentNote: null });
@@ -36,9 +43,10 @@ export default function AboutEvent() {
       id: noteState.currentNote.id,
       name: name,
       discription: discription,
-      deadline: [],
+      deadline: deadline,
       cost: cost
     });
+    closeAboutEvent();
   }
 
   function deleteHandler() {
@@ -49,11 +57,23 @@ export default function AboutEvent() {
     closeAboutEvent();
   }
 
+  function choiceDeadline() {
+    setOpenModalDatePortal(<Portal id="root">
+      <Modal
+        text={{ header: 'Выберите дату и время', main: 'Выберете дату и время окончания события' }}
+        isOpen={true}
+        onClick={() => setOpenModalDatePortal(null)}
+      >
+        <ChooseDate setDeadline={setDeadline} />
+      </Modal>
+    </Portal>);
+  }
+
   const priorityVariants = [
     { text: 'Не выбран', color: 'gray' },
-    { text: 'Низкий',    color: 'green' },
-    { text: 'Средний',   color: 'yellow' },
-    { text: 'Высокий',   color: 'red' },
+    { text: 'Низкий', color: 'green' },
+    { text: 'Средний', color: 'yellow' },
+    { text: 'Высокий', color: 'red' },
   ]
 
   const todoVariants = [
@@ -87,8 +107,9 @@ export default function AboutEvent() {
         </span>
 
         <span className="aboutevent-deadline">
-          <p>Выберете дату и время окночания: </p>
-           <button>Выбрать</button> {/*//!!!!!!!!!!!!!!!!!!!!!!!!!!!! */}
+          <p>{deadline === null ? 'Выберете дату и время окночания: ' : `Окончание: ${deadline.toLocaleString()}`}</p>
+          <button onClick={choiceDeadline}>Выбрать</button> {/*//!!!!!!!!!!!!!!!!!!!!!!!!!!!! */}
+          {openModalDatePortal}
         </span>
 
         <span className="aboutevent-children">

@@ -25,6 +25,8 @@ const noteReducer = (state, action = initialNoteState) => {
 
   const data = { ...state, ...action };
 
+  console.log(data)
+
   return data;
 }
 

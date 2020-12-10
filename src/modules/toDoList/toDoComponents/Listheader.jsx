@@ -8,7 +8,7 @@ export default function ListItem() {
       <p></p>
       <p>Название</p>
       <p>Описание</p>
-      <p className="time">Время</p>
+      <p className="time">Время создания</p>
     </div>
   )
 }

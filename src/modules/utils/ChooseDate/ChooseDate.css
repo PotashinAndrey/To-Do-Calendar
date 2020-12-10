@@ -1,0 +1,5 @@
+.choosedate {
+  display: grid;
+  grid-column: 1fr;
+  grid-template-rows: 1fr;
+}

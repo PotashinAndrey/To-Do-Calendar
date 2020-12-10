@@ -9,12 +9,15 @@
   justify-content: center;
   padding-top: 5rem;
   z-index: 1;
+  transition: 0.5s;
 }
 
 .body {
   padding: 2rem;
-  width: 400px;
-  height: 200px;
+  min-width: 400px;
+  max-width: 600px;
+  min-height: 200px;
+  max-height: 500px;
   background: white
 }
 

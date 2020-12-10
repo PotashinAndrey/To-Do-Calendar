@@ -1,0 +1,11 @@
+.chooseTime {
+  margin: 10px;
+  margin-bottom: 25px;
+}
+
+.chooseTime-input {
+  padding: 5px;
+  width: 30px;
+  justify-content: center;
+  margin-right: 10px;
+}

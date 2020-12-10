@@ -30,7 +30,8 @@ export default function calculateMonth() {
                 beforeDays: beforeDays,
                 nowDays: nowDays,
                 nextDays: nextDays,
-                month: Data.Year[nowMonth]
+                monthName: Data.Year[nowMonth],
+                month: nowMonth
                 }
 
   return (
