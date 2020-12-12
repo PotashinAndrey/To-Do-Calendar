@@ -1,26 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import calculateMonth from './calculateMonth.js';
 import DayItem from './items/DayItem.jsx';
 import Item from './items/Item.jsx';
 
-export default function Grid({ month, rows, columns, onClick, active = {day: new Date().getDate(), month: 0 } }) {
-  const [activeItem, setActiveItem] = useState(isActiveExist(month, active));
-
-  useEffect(() => {
-    setActiveItem(isActiveExist(month, active))
-  }, [month]);
+export default function Grid({ month, onClick, activeDate}) {
+  const rows = 6;
+  const columns = 7;
 
   let grid = [];
   const monthData = calculateMonth(month);
 
-  function itemClick(day, month, monthDelta) {
-    let validMonth = month + monthDelta;
+  function itemClick(day, month) {
+    const date =new Date(new Date().getFullYear(), month, day, 0, 0, 0, 0);
 
-    if (month + monthDelta < 0 ) validMonth = 11;
-    if (month + monthDelta > 11 ) validMonth = 0;
-
-    onClick({day: day, month: validMonth});
-    setActiveItem({day: day, month: monthDelta});
+    onClick(date);
   }
 
   for (let i = 0; i < monthData.week.length; i++) {
@@ -30,22 +23,21 @@ export default function Grid({ month, rows, columns, onClick, active = {day: new
   for (let i = 0; i < monthData.beforeDays.length; i++) {
     grid.push(<Item
       day={monthData.beforeDays[i]}
-      month={monthData.month}
-      monthDelta={-1}
+      month={month - 1}
       key={'beforeDays' + i}
       onClick={itemClick}
-      activeItem={activeItem}
+      active={activeDate.getFullYear() === new Date(new Date().getFullYear(), month - 1, 1, 0, 0, 0, 0 ).getFullYear() && activeDate.getMonth() === new Date(new Date().getFullYear(), month - 1, 1, 0, 0, 0, 0 ).getMonth() && activeDate.getDate() === new Date(new Date().getFullYear(), monthData.month, 0, 0, 0, 0, 0).getDate() + i }
     />);
   }
 
   for (let i = 0; i < monthData.nowDays.length; i++) {
     grid.push(<Item
       day={monthData.nowDays[i]}
-      month={monthData.month}
-      monthDelta={0}
+      month={month}
+      current={true}
       key={'nowDays' + i}
       onClick={itemClick}
-      activeItem={activeItem}
+      active={activeDate.getFullYear() === new Date(new Date().getFullYear(), month, 1, 0, 0, 0, 0 ).getFullYear() && activeDate.getMonth() === monthData.month && activeDate.getDate() === i + 1}
     />);
   }
 
@@ -54,11 +46,10 @@ export default function Grid({ month, rows, columns, onClick, active = {day: new
   for (let i = 0; i < lastWeek ; i++) {
     grid.push(<Item
       day={i + 1}
-      month={monthData.month}
-      monthDelta={1}
+      month={month + 1}
       key={'nextDays' + i}
       onClick={itemClick}
-      activeItem={activeItem}
+      active={activeDate.getFullYear() === new Date(new Date().getFullYear(), month + 1, 1, 0, 0, 0, 0 ).getFullYear() && activeDate.getMonth() === new Date(new Date().getFullYear(), month + 1, 1, 0, 0, 0, 0 ).getMonth() && activeDate.getDate() === 1 + i }
     />);
   }
 
@@ -85,11 +76,4 @@ export default function Grid({ month, rows, columns, onClick, active = {day: new
       {grid}
     </div>
   )
-}
-
-
-function isActiveExist(month, active) {
-  if (new Date().getMonth() === month) return active;
-
-  return {day: -1, month: 0}
 }

@@ -73,10 +73,8 @@ export default function Filter() {
       <div></div>
       <Grid
         month={new Date().getMonth()}
-        rows={6}
-        columns={7}
         onClick={setDate}
-        active={date ? { day: date.day, month: new Date().getMonth() } : undefined}
+        activeDate={date ? date : new Date()}
       />
       <button onClick={throwOff} >Сбросить</button>
     </div>

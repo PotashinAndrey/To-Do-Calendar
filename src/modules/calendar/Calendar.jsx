@@ -10,17 +10,18 @@ export default function Calendar() {
   const { noteState, noteDispatch } = useNoteContext();
 
   const [month, setMonth] = useState(new Date().getMonth());
-  const [activeDate, setActiveDate] = useState({ day: new Date().getDate(), month: 0 });
+  const [activeDate, setActiveDate] = useState(new Date());
 
-  function choicedDate(obj) {
-    console.log(obj)
-    setActiveDate(...obj);
+  function choicedDate(date) {
+    setActiveDate(date)
     filterDispatch({
       notes: noteState.notes,
       filters: {
-        creationTime: new Date(new Date().getFullYear(), month, obj.day, 0, 0, 0, 0)
+        creationTime: new Date(new Date().getFullYear(), month, date.getDate(), 0, 0, 0, 0)
       }
     });
+
+    console.log(date)
   }
 
   function throwOff() {
@@ -31,7 +32,7 @@ export default function Calendar() {
       }
     });
     setMonth(new Date().getMonth());
-    setActiveDate({ day: new Date().getDate(), month: 0 });
+    setActiveDate(new Date());
   }
 
   return (
@@ -40,10 +41,8 @@ export default function Calendar() {
       <div className="calendar-grid-container">
         <Grid
           month={month}
-          rows={6}
-          columns={7}
           onClick={choicedDate}
-          active={activeDate}
+          activeDate={activeDate}
         />
       </div>
       <div className="calendar-buttons-container">
