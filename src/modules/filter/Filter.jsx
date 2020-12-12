@@ -2,79 +2,57 @@ import React, { useState, useEffect } from 'react';
 import Selector from '../utils/Selector.jsx'
 import ChooseCost from '../aboutEvent/ChooseCost.jsx';
 import Grid from '../calendar/calendarTable/Grid.jsx';
-import useNoteContext from '../Contexts/NoteContext.jsx';
-import useFilterContext from '../Contexts/FilterContext.jsx';
+import useFiltersContext from '../Contexts/FiltersContext.jsx';
 import './Filter.css';
 
 export default function Filter() {
-  const { noteState } = useNoteContext();
-  const { filterState, filterDispatch } = useFilterContext();
+  const { filtersState, filtersDispatch } = useFiltersContext();
 
-  const [priority, setPriority] = useState(filterState.filters.priority);
-  const [state, setState] = useState(filterState.filters.state);
-  const [cost, setCost] = useState(filterState.filters.cost);
-  const [date, setDate] = useState(filterState.filters.date);
 
   const priorityVariants = [
-    { text: 'Не выбран', color: 'gray' },
-    { text: 'Низкий', color: 'green' },
-    { text: 'Средний', color: 'yellow' },
-    { text: 'Высокий', color: 'red' },
+    { text: 'not choice', color: 'gray' },
+    { text: 'low', color: 'green' },
+    { text: 'medium', color: 'yellow' },
+    { text: 'high', color: 'red' },
   ]
 
   const todoVariants = [
-    { text: 'Не выбрано', color: 'gray' },
-    { text: 'Не выполнено', color: "rgb(240, 250, 105)" },
-    { text: 'Выполнено', color: 'rgba(118, 175, 127, 1)' },
-    { text: 'Отменено', color: 'rgba(200, 200, 200, 1)' }
+    { text: 'not choice', color: 'gray' },
+    { text: 'todo', color: "rgb(240, 250, 105)" },
+    { text: 'done', color: 'rgba(118, 175, 127, 1)' },
+    { text: 'canceled', color: 'rgba(200, 200, 200, 1)' }
   ]
 
-  useEffect(() => {
-    filterDispatch({
-      notes: noteState.notes,
-      filters: {
-        cost: +cost,
-        date: date,
-        priority: priority === '' || priority === 'Не выбран' ? '' : priority,
-        state: state === '' || priority === 'Не выбрано' ? '' : state
-      }
-    });
-  }, [priority, state, cost, date, noteState]);
-
   function throwOff() {
-    filterDispatch({
-      notes: noteState.notes,
+    filtersDispatch({
       filters: {
-        cost: 0,
-        date: null,
-        priority: '',
-        state: ''
+        name: '',
+        cost: undefined,
+        date: undefined,
+        priority: undefined,
+        state: undefined,
       }
     });
-    setCost(0);
-    setState('');
-    setDate(null);
-    setPriority('');
   }
 
   return (
     <div className="filter">
       <Selector text="Приортиет: "
-        value={priority}
+        value={filtersState.filters.priority}
         variants={priorityVariants}
-        onChange={setPriority}
+        onChange={e => filtersDispatch({ filters: { priority: e === 'not choice' ? undefined: e} })}
       />
       <Selector text="Состояние: "
-        value={state}
+        value={filtersState.filters.state}
         variants={todoVariants}
-        onChange={setState}
+        onChange={e => filtersDispatch({ filters: { state: e === 'not choice' ? undefined: e } })}
       />
-      <ChooseCost cost={cost} setCost={setCost} />
+      <ChooseCost cost={filtersState.filters.cost} setCost={e => filtersDispatch({ filters: { cost: +e } })} />
       <div></div>
       <Grid
         month={new Date().getMonth()}
-        onClick={setDate}
-        activeDate={date ? date : new Date()}
+        onClick={e => filtersDispatch({ filters: { date: e } })}
+        activeDate={filtersState.filters.date ? filtersState.filters.date : new Date()}
       />
       <button onClick={throwOff} >Сбросить</button>
     </div>

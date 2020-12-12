@@ -1,30 +1,19 @@
 import React, { useState } from 'react';
 import './Note.css';
-import useNoteContext, { uuidv4 } from '../Contexts/NoteContext.jsx';
+import useNotesContext from '../Contexts/NotesContext.jsx';
+import NoteClass from '../Model/NoteClass.js';
 
 export default function Note() {
   const [name, setName] = useState('');
   const [discription, setDiscription] = useState('');
-  const { noteState, noteDispatch } = useNoteContext();
+  const { notesState, notesDispatch } = useNotesContext();
 
   function createNote() {
     if (name.length === 0) return;
 
-    const note = {
-      time: new Date(),
-      children: [],
-      state: 'Не выполнено',
-      priority: 'Не выбран',
-      id: uuidv4(),
-      name: name,
-      discription: discription,
-      deadline: null,
-      cost: 0
-    }
+    const note = new NoteClass(name, discription);
 
-    const notes = noteState.notes.concat(note);
-
-    noteDispatch({ notes });
+    notesDispatch(note);
     setName('');
     setDiscription('');
   }

@@ -1,58 +1,33 @@
-import React, { useState, useEffect } from 'react';
+import React, {useEffect, useState} from 'react';
 import './AboutEvent.css';
 import Selector from '../utils/Selector.jsx';
-import useNoteContext from '../Contexts/NoteContext.jsx';
-import Portal from '../Contexts/Portal.jsx';
+import Portal from '../HOC/Portal.jsx'
 import Modal from '../utils/Modal';
 import ChooseDate from '../utils/ChooseDate/ChooseDate.jsx';
 import ChooseCost from './ChooseCost.jsx';
+import ChooseChildren from './ChooseChildren.jsx';
+import useCurrentNoteContext from '../Contexts/CurrentNoteContext.jsx';
+import useNotesContext from '../Contexts/NotesContext.jsx';
+
 
 export default function AboutEvent() {
-  const { noteState, noteDispatch } = useNoteContext();
+  const { currentNoteState, currentNoteDispatch } = useCurrentNoteContext();
+  const { notesDispatch } = useNotesContext();
 
-  const [name, setName] = useState(noteState.currentNote.name);
-  const [discription, setDiscription] = useState(noteState.currentNote.discription);
-  const [priority, setPriority] = useState(noteState.currentNote.priority);
-  const [state, setState] = useState(noteState.currentNote.state);
-  const [children, setChildren] = useState(noteState.currentNote.children);
-  const [deadline, setDeadline] = useState(noteState.currentNote.deadline);
-  const [cost, setCost] = useState(noteState.currentNote.cost);
-
-  const [openModalDatePortal, setOpenModalDatePortal] = useState(null);
-
-  useEffect(() => {
-    setName(noteState.currentNote.name);
-    setDiscription(noteState.currentNote.discription);
-    setPriority(noteState.currentNote.priority);
-    setState(noteState.currentNote.state);
-    setChildren(noteState.currentNote.children);
-    setDeadline(noteState.currentNote.deadline);
-    setCost(noteState.currentNote.cost);
-  }, [noteState]);
-
+const [ openModalDatePortal, setOpenModalDatePortal ] = useState(null);
 
   function closeAboutEvent() {
-    noteDispatch({ currentNote: null });
+    currentNoteDispatch();
   }
 
   function saveHandler() {
-    noteDispatch({
-      time: noteState.currentNote.time,
-      children: [],
-      state: state,
-      priority: priority,
-      id: noteState.currentNote.id,
-      name: name,
-      discription: discription,
-      deadline: deadline,
-      cost: +cost
-    });
+    notesDispatch(currentNoteState.currentNote);
     closeAboutEvent();
   }
 
   function deleteHandler() {
-    noteDispatch({
-      id: noteState.currentNote.id,
+    notesDispatch({
+      id: currentNoteState.currentNote.id,
       deleted: true
     });
     closeAboutEvent();
@@ -65,65 +40,94 @@ export default function AboutEvent() {
         isOpen={true}
         onClick={() => setOpenModalDatePortal(null)}
       >
-        <ChooseDate currentDate={deadline} setDeadline={setDeadline} />
+        <ChooseDate currentDate={currentNoteState.currentNote.date} setDeadline={date => currentNoteDispatch({ currentNote: { date: date } })} />
       </Modal>
     </Portal>);
   }
 
+  function choiceChildren() {
+  //   setOpenModalChildrenPortal(<Portal id="root">
+  //     <Modal
+  //       text={{ header: 'Выберите подзадачи', main: 'Введите название' }}
+  //       isOpen={true}
+  //       onClick={() => setOpenModalChildrenPortal(null)}
+  //     >
+  //       <ChooseChildren />
+  //     </Modal>
+  //   </Portal>);
+  }
+
   const priorityVariants = [
-    { text: 'Не выбран', color: 'gray' },
-    { text: 'Низкий', color: 'green' },
-    { text: 'Средний', color: 'yellow' },
-    { text: 'Высокий', color: 'red' },
+    { text: 'not choice', color: 'gray' },
+    { text: 'low', color: 'green' },
+    { text: 'medium', color: 'yellow' },
+    { text: 'high', color: 'red' },
   ]
 
   const todoVariants = [
-    { text: 'Не выполнено', color: "rgb(240, 250, 105)" },
-    { text: 'Выполнено', color: 'rgba(118, 175, 127, 1)' },
-    { text: 'Отменено', color: 'rgba(200, 200, 200, 1)' }
+    { text: 'todo', color: "rgb(240, 250, 105)" },
+    { text: 'done', color: 'rgba(118, 175, 127, 1)' },
+    { text: 'canceled', color: 'rgba(200, 200, 200, 1)' }
   ]
 
   return (
     <div className="aboutevent note" >
       <span className="aboutevent-span">
-        <input className="aboutevent-name" value={name} onChange={e => setName(e.target.value)} />
-        <p>{noteState.currentNote.time.toLocaleString()}</p>
+        <input
+          className="aboutevent-name"
+          value={currentNoteState.currentNote.name}
+          onChange={e => currentNoteDispatch({ currentNote: { name: e.target.value } })}
+        />
         <img
           src="https://img.icons8.com/metro/452/close-window.png"
           alt="закрыть" onClick={closeAboutEvent}
         />
+        <p>{currentNoteState.currentNote.creationTime.toLocaleString()}</p>
       </span>
 
       <textarea
-        onChange={e => setDiscription(e.target.value)}
-        value={discription}
+        onChange={e => currentNoteDispatch({
+          currentNote: { discription: e.target.value === '' ? undefined : e.target.value }
+        })}
+        value={currentNoteState.currentNote.discription}
         className="aboutevent-textarea"
         placeholder="Добавьте описание..."
       ></textarea>
 
       <div className="aboutevent-edit">
         <span className="selectors">
-          <Selector text="Приоритет: " value={priority} variants={priorityVariants} onChange={setPriority} />
-          <Selector text="Состояние: " value={state} variants={todoVariants} onChange={setState} />
+          <Selector
+            text="Приоритет: "
+            value={currentNoteState.currentNote.priority}
+            variants={priorityVariants}
+            onChange={e => currentNoteDispatch({ currentNote: { priority: e } })}
+          />
+          <Selector
+            text="Состояние: "
+            value={currentNoteState.currentNote.state}
+            variants={todoVariants}
+            onChange={e => currentNoteDispatch({ currentNote: { state: e } })}
+          />
         </span>
 
         <span className="aboutevent-deadline">
-          <p>{deadline === null ? 'Выберете дату и время окночания: ' : `Окончание: ${deadline.toLocaleString()}`}</p>
+          <p>{currentNoteState.currentNote.date === undefined ? 'Выберете дату и время окночания: ' :
+            `Окончание: ${currentNoteState.currentNote.date?.toLocaleString()}`}</p>
           <button onClick={choiceDeadline}>Выбрать</button>
           {openModalDatePortal}
         </span>
 
         <span className="aboutevent-children">
-          <ChooseCost cost={cost} setCost={setCost} />
+          <ChooseCost cost={currentNoteState.currentNote.cost} setCost={e => currentNoteDispatch({ currentNote: { cost: e } })} />
           <p>Выберете подзадачи: </p>
-          <button>Выбрать</button> {/*//!!!!!!!!!!!!!!!!!!!!!!!!!! */}
+          <button onClick={choiceChildren} >Выбрать</button>
+          {/* {openModalChildrenPortal} */}
         </span>
 
         <span className="aboutevent-delete">
           <button onClick={saveHandler} >Сохранить</button>
           <button onClick={deleteHandler}>Удалить задачу</button>
         </span>
-
       </div>
     </div>
   )

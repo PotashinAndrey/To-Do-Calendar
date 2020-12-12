@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import calculateMonth from './calculateMonth.js';
 import DayItem from './items/DayItem.jsx';
 import Item from './items/Item.jsx';

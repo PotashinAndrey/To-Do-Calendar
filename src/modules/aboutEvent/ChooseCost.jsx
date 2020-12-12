@@ -12,7 +12,7 @@ export default function ChooseCost({ cost, setCost }) {
         min="0"
         placeholder="Цена..."
         value={cost}
-        onChange={e => setCost(e.target.value)}
+        onChange={e => setCost(+e.target.value)}
       />
     </div>
   )

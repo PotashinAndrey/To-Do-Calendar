@@ -1,47 +1,45 @@
 import React, { useState, useEffect } from 'react';
 import './ListItem.css';
 import CheckBox from '../../utils/CheckBox.jsx';
-import useNoteContext, { getById } from '../../Contexts/NoteContext.jsx';
+import useNotesContext from '../../Contexts/NotesContext.jsx';
 
-export default function ListItem({ noteId, onClick }) {
+export default function ListItem({ note, onClick }) {
+  const { notesDispatch } = useNotesContext();
+
   const style = { textDecoration: 'line-through' };
-  const { noteState, noteDispatch } = useNoteContext();
-  const [currentNote, setCurrentNote] = useState(getById(noteState, noteId));
-  const [checked, setChecked] = useState(currentNote?.state === 'Не выполнено' ? false : true);
+  const [checked, setChecked] = useState(note.state === 'todo' ? false : true);
 
   useEffect(() => {
-    const state = { state: checked ? 'Выполнено' : 'Не выполнено' };
-    noteDispatch({ ...currentNote, ...state });
-    setCurrentNote({ ...currentNote, ...state });
+    const state = { state: checked ? 'done' : 'todo' };
+    notesDispatch({ ...note, ...state });
   }, [checked]);
 
   useEffect(() => {
-    setCurrentNote(getById(noteState, noteId));
-    setChecked(currentNote.state === 'Не выполнено' ? false : true)
-  }, [noteState]);
+    setChecked(note.state === 'todo' ? false : true);
+  }, [note]);
+
+  function unChecked() {
+    setChecked(!checked);
+  }
 
   const priorityVariants = {
-    'Низкий': 'rgba(0, 255, 0, 0.3)',
-    'Средний': 'rgba(255, 255, 0, 0.3)',
-    'Высокий': 'rgba(255, 0, 0, 0.3)'
+    'low': 'rgba(0, 255, 0, 0.3)',
+    'medium': 'rgba(255, 255, 0, 0.3)',
+    'high': 'rgba(255, 0, 0, 0.3)'
   }
 
-  if (currentNote) {
-    return (
-      <div style={{ background: priorityVariants[currentNote.priority] }} onClick={() => { onClick(currentNote) }} className="listitem">
-        <CheckBox done={currentNote.state === 'Не выполнено' ? false : true} onClick={setChecked} />
-        <p
-          className="name"
-          style={currentNote.state === 'Выполнено' || currentNote.state === 'Отменено' ? style : null}
-        > {currentNote.name} </p>
-        <p
-          className="discription"
-          style={currentNote.state === 'Выполнено' || currentNote.state === 'Отменено' ? style : null}
-        > {currentNote.discription} </p>
-        { currentNote.time ? <p className="time"> {currentNote.time.toLocaleString()} </p> : null}
-      </div>
-    )
-  } else {
-    return null;
-  }
+  return (
+    <div style={{ background: priorityVariants[note.priority] }} onClick={() => { onClick(note) }} className="listitem">
+      <CheckBox done={note.state === 'todo' ? false : true} onClick={unChecked} />
+      <p
+        className="name"
+        style={note.state === 'done' || note.state === 'canceled' ? style : null}
+      > {note.name} </p>
+      <p
+        className="discription"
+        style={note.state === 'done' || note.state === 'canceled' ? style : null}
+      > {note.discription} </p>
+      <p className="time"> {note.creationTime.toLocaleString()} </p>
+    </div>
+  )
 }

@@ -3,7 +3,7 @@ import './CheckBox.css';
 
 export default function CheckBox({ done, onClick }) {
   function checkHandler(e) {
-    onClick(!done);
+    onClick();
     e.stopPropagation();
   }
 

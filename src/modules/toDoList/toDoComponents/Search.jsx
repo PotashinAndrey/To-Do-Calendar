@@ -1,22 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import './Search.css';
-import useFilterContext from '../../Contexts/FilterContext.jsx';
-import useNoteContext from '../../Contexts/NoteContext.jsx';
+import useFiltersContext from '../../Contexts/FiltersContext.jsx';
 import Modal from '../../utils/Modal.jsx';
-import Portal from '../../Contexts/Portal.jsx';
+import Portal from '../../HOC/Portal.jsx';
 import Filter from '../../filter/Filter.jsx';
+import SearchLine from './SearchLine.jsx';
 
 export default function Search() {
   const [findedByName, setFindedByName] = useState('');
   const [openModalDatePortal, setOpenModalDatePortal] = useState(null);
 
-  const {filterState, filterDispatch} = useFilterContext();
-  const {noteState} = useNoteContext();
+  const {filtersState, filtersDispatch} = useFiltersContext();
 
   useEffect(() => {
-    filterDispatch({
-      filters: { ...filterState.filters, name: findedByName},
-      notes: noteState.notes
+    filtersDispatch({
+      filters: { ...filtersState.filters, name: findedByName}
     });
   }, [findedByName]);
 
@@ -33,14 +31,13 @@ export default function Search() {
   }
 
   function throwOff() {
-    filterDispatch({
-      notes: noteState.notes,
+    filtersDispatch({
       filters: {
         name: '',
-        cost: 0,
-        date: null,
-        priority: '',
-        state: ''
+        cost: undefined,
+        date: undefined,
+        priority: undefined,
+        state: undefined
       }
     });
     setFindedByName('');
@@ -48,13 +45,8 @@ export default function Search() {
 
   return (
     <div className="search">
-      <input
-        type="text"
-        placeholder="Поиск..."
-        className="searchinput"
-        value={findedByName}
-        onChange={e => setFindedByName(e.target.value)}
-      />
+      <SearchLine className="searchinput" findLine={findedByName} setFindLine={setFindedByName} />
+
       <button onClick={setFilters} >Фильтры</button>
       <button onClick={throwOff}>Сбростить</button>
       {openModalDatePortal}
