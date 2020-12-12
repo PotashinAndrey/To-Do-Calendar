@@ -13,4 +13,6 @@
 
 .calendar-buttons-container {
   max-height: 50px;
+  justify-self: center;
+  align-self: flex-start;
 }

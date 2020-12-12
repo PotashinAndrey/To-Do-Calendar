@@ -3,32 +3,51 @@ import './Calendar.css';
 import Grid from './calendarTable/Grid.jsx'
 import ChooseMonth from './calendarTable/ChooseMonth.jsx';
 import useFilterContext from '../Contexts/FilterContext.jsx';
-// import useNoteContext from '../Contexts/NoteContext.jsx';
+import useNoteContext from '../Contexts/NoteContext.jsx';
 
 export default function Calendar() {
   const { filterState, filterDispatch } = useFilterContext();
+  const { noteState, noteDispatch } = useNoteContext();
 
-  const [activeDate, setActiveDate] = useState({ day: new Date().getDate(), month: 0 });
   const [month, setMonth] = useState(new Date().getMonth());
-  const [date, setDate] = useState(new Date());
+  const [activeDate, setActiveDate] = useState({ day: new Date().getDate(), month: 0 });
 
-  useEffect(() => {
-    setDate(new Date(new Date().getFullYear(), month, 1, 0, 0, 0, 0))
-  }, [month]);
+  function choicedDate(obj) {
+    console.log(obj)
+    setActiveDate(...obj);
+    filterDispatch({
+      notes: noteState.notes,
+      filters: {
+        creationTime: new Date(new Date().getFullYear(), month, obj.day, 0, 0, 0, 0)
+      }
+    });
+  }
 
-  function chooseDate() {
-
+  function throwOff() {
+    filterDispatch({
+      notes: noteState.notes,
+      filters: {
+        creationTime: null
+      }
+    });
+    setMonth(new Date().getMonth());
+    setActiveDate({ day: new Date().getDate(), month: 0 });
   }
 
   return (
     <div className="calendar">
       <ChooseMonth month={month} onClick={setMonth} />
       <div className="calendar-grid-container">
-        <Grid month={month} rows={6} columns={7} onClick={setActiveDate} active={activeDate} />
+        <Grid
+          month={month}
+          rows={6}
+          columns={7}
+          onClick={choicedDate}
+          active={activeDate}
+        />
       </div>
       <div className="calendar-buttons-container">
-        <button>Сбросить</button>
-        <button>Выбрать дату</button>
+        <button onClick={throwOff} >Сбросить</button>
         <button>Выбрать промежуток</button>
       </div>
     </div>

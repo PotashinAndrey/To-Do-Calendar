@@ -14,7 +14,7 @@ export default function ChooseDate({ currentDate, setDeadline }) {
 
   return (
     <div className="choosedate">
-      <Grid rows={6} columns={7} onClick={setDate} />
+      <Grid month={new Date().getMonth()} rows={6} columns={7} onClick={setDate} />
       <ChooseTime setTime={setTime} />
     </div>
   )

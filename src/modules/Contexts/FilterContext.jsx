@@ -37,8 +37,6 @@ const filterReducer = (state, action = initialFilterState) => {
 
     const data = { filterNotes: filtred, filters: filters };
 
-    console.log('!AN && AF');
-
     return data;
   }
 
@@ -87,15 +85,14 @@ function filterNotes(toFilter, filters) {
   const filtredByState = filters.state === '' ? filtredByPriority : filtredByPriority.filter(
     e => e.state === filters.state
   );
+  const filtredByCreationTime = filters.creationTime ? filtredByState.filter(e => {
+    return e.time.getFullYear() === filters.creationTime.getFullYear() &&
+    e.time.getMonth() === filters.creationTime.getMonth() &&
+    e.time.getDate() === filters.creationTime.getDate();
+  }) : filtredByState;
 
-  return filtredByState;
+  return filtredByCreationTime;
 }
-
-// function compareDate(compared, toComptare) {
-//   return compared.getFullYear() == toComptare.getFullYear() &&
-//   compared.getMonth() == toComptare.getMonth() &&
-//   compared.getDate() == toComptare.getDate();
-// }
 
 export { FilerContext, FilterContextProvider, initialFilterState, filterReducer, getById }
 export default useFilterContext;

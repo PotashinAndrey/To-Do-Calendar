@@ -1,10 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import calculateMonth from './calculateMonth.js';
 import DayItem from './items/DayItem.jsx';
 import Item from './items/Item.jsx';
 
 export default function Grid({ month, rows, columns, onClick, active = {day: new Date().getDate(), month: 0 } }) {
-  const [activeItem, setActiveItem] = useState(active);
+  const [activeItem, setActiveItem] = useState(isActiveExist(month, active));
+
+  useEffect(() => {
+    setActiveItem(isActiveExist(month, active))
+  }, [month]);
 
   let grid = [];
   const monthData = calculateMonth(month);
@@ -81,4 +85,11 @@ export default function Grid({ month, rows, columns, onClick, active = {day: new
       {grid}
     </div>
   )
+}
+
+
+function isActiveExist(month, active) {
+  if (new Date().getMonth() === month) return active;
+
+  return {day: -1, month: 0}
 }

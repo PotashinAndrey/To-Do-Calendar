@@ -71,7 +71,13 @@ export default function Filter() {
       />
       <ChooseCost cost={cost} setCost={setCost} />
       <div></div>
-      <Grid rows={6} columns={7} onClick={setDate} active={ date ? {day: date.day, month: -(new Date().getMonth() - date.month)} : undefined} />
+      <Grid
+        month={new Date().getMonth()}
+        rows={6}
+        columns={7}
+        onClick={setDate}
+        active={date ? { day: date.day, month: new Date().getMonth() } : undefined}
+      />
       <button onClick={throwOff} >Сбросить</button>
     </div>
   )
