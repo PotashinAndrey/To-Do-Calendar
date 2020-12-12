@@ -6,9 +6,10 @@ const initialFilterState = {
   filterNotes: [],
   filters: {
     name: '',
-    cost: null,
+    cost: 0,
     date: null,
-    priority: 'Не выбрано'
+    priority: '',
+    state: ''
   }
 }
 
@@ -16,19 +17,28 @@ const initialFilterState = {
 const filterReducer = (state, action = initialFilterState) => {
   if (action.notes && action.notes.length !== 0) {
     if (action.filters) {
-      const filters = {...state.filters, ...action.filters }
-      const filtred = action.notes.filter(e => e.name.includes(filters.name));
-      const data = {filterNotes: filtred, filters: filters};
+      const filters = { ...state.filters, ...action.filters }
+      const filtred = filterNotes(action.notes, filters);
+
+      const data = { filterNotes: filtred, filters: filters };
 
       return data;
     }
-    const filtred = action.notes.filter(e => e.name.includes(state.filters.name));
-    const data = {...state, ...{filterNotes: filtred}};
+    const filtred = filterNotes(action.notes, state.filters);
+    const data = { ...state, ...{ filterNotes: filtred } };
 
     return data;
   }
 
-  const data = { ...state, ...action };
+  if (!action.notes && action.filters) {
+    const filters = { ...state.filters, ...action.filters }
+    const data = { filterNotes: state.filterNotes, filters: filters };
+
+    return data;
+  }
+
+  // const data = { ...state, ...action };
+  const data = { filterNotes: state.filterNotes, filters: { ...state.filters, ...action.filters } };
 
   return data;
 }
@@ -58,8 +68,22 @@ function getById(state, id) {
   return state.notes[index];
 }
 
-function filterNotes() {
+function filterNotes(toFilter, filters) {
+  const filtredByName = toFilter.filter(e => e.name.includes(filters.name));
+  const filtredByCost = filters.cost === 0 ? filtredByName : filtredByName.filter(
+    e => +e.cost <= +filters.cost && +e.cost !== 0
+  );
+  const filtredByDate = filters.date ? filtredByCost.filter(
+    e => e.deadline?.getMonth() <= filters.date.month && e.deadline?.getDate() <= filters.date.day
+  ) : filtredByCost;
+  const filtredByPriority = filters.priority === '' ? filtredByDate : filtredByDate.filter(
+    e => e.priority === filters.priority
+  );
+  const filtredByState = filters.state === '' ? filtredByPriority : filtredByPriority.filter(
+    e => e.state === filters.state
+  );
 
+  return filtredByState;
 }
 
 // function compareDate(compared, toComptare) {
@@ -68,6 +92,6 @@ function filterNotes() {
 //   compared.getDate() == toComptare.getDate();
 // }
 
-export { FilerContext, FilterContextProvider, initialFilterState, filterReducer, getById, filterNotes }
+export { FilerContext, FilterContextProvider, initialFilterState, filterReducer, getById }
 export default useFilterContext;
 

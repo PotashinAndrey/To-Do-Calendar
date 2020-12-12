@@ -10,17 +10,12 @@ export default function Search() {
   const [findedByName, setFindedByName] = useState('');
   const [openModalDatePortal, setOpenModalDatePortal] = useState(null);
 
-  const {filterDispatch} = useFilterContext();
+  const {filterState, filterDispatch} = useFilterContext();
   const {noteState} = useNoteContext();
 
   useEffect(() => {
     filterDispatch({
-      filters: {
-        name: findedByName,
-        cost: null,
-        date: null,
-        priority: 'Не выбрано'
-      },
+      filters: { ...filterState.filters, name: findedByName},
       notes: noteState.notes
     });
   }, [findedByName]);
@@ -37,6 +32,19 @@ export default function Search() {
   </Portal>);
   }
 
+  function throwOff() {
+    filterDispatch({
+      notes: noteState.notes,
+      filters: {
+        name: '',
+        cost: 0,
+        date: null,
+        priority: '',
+        state: ''
+      }
+    });
+  }
+
   return (
     <div className="search">
       <input
@@ -46,6 +54,7 @@ export default function Search() {
         onChange={e => setFindedByName(e.target.value)}
       />
       <button onClick={setFilters} >Фильтры</button>
+      <button onClick={throwOff}>Сбростить</button>
       {openModalDatePortal}
     </div>
   )

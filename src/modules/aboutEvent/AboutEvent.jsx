@@ -5,6 +5,7 @@ import useNoteContext from '../Contexts/NoteContext.jsx';
 import Portal from '../Contexts/Portal.jsx';
 import Modal from '../utils/Modal';
 import ChooseDate from '../utils/ChooseDate/ChooseDate.jsx';
+import ChooseCost from './ChooseCost.jsx';
 
 export default function AboutEvent() {
   const { noteState, noteDispatch } = useNoteContext();
@@ -108,18 +109,12 @@ export default function AboutEvent() {
 
         <span className="aboutevent-deadline">
           <p>{deadline === null ? 'Выберете дату и время окночания: ' : `Окончание: ${deadline.toLocaleString()}`}</p>
-          <button onClick={choiceDeadline}>Выбрать</button> {/*//!!!!!!!!!!!!!!!!!!!!!!!!!!!! */}
+          <button onClick={choiceDeadline}>Выбрать</button>
           {openModalDatePortal}
         </span>
 
         <span className="aboutevent-children">
-          <p>Установите цену: </p>
-          <input
-            className="aboutevent-cost"
-            type="text"
-            placeholder="Цена..."
-            value={cost} onChange={e => setCost(e.target.value)}
-          />
+          <ChooseCost cost={cost} setCost={setCost} />
           <p>Выберете подзадачи: </p>
           <button>Выбрать</button> {/*//!!!!!!!!!!!!!!!!!!!!!!!!!! */}
         </span>

@@ -3,14 +3,19 @@ import calculateMonth from './calculateMonth.js';
 import DayItem from './items/DayItem.jsx';
 import Item from './items/Item.jsx';
 
-export default function Grid({ rows, columns, onClick }) {
-  const [activeItem, setActiveItem] = useState({day: new Date().getDate(), month: 0 });
+export default function Grid({ rows, columns, onClick, active = {day: new Date().getDate(), month: 0 } }) {
+  const [activeItem, setActiveItem] = useState(active);
 
   let grid = [];
   const monthData = calculateMonth();
 
   function itemClick(day, month, monthDelta) {
-    onClick({day: day, month: month + monthDelta});
+    let validMonth = month + monthDelta;
+
+    if (month + monthDelta < 0 ) validMonth = 11;
+    if (month + monthDelta > 11 ) validMonth = 0;
+
+    onClick({day: day, month: validMonth});
     setActiveItem({day: day, month: monthDelta});
   }
 

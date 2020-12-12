@@ -1,0 +1,7 @@
+.chooseCost {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  /* margin: 10px; */
+}
+
