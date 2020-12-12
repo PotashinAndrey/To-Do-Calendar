@@ -43,6 +43,7 @@ export default function Search() {
         state: ''
       }
     });
+    setFindedByName('');
   }
 
   return (
@@ -51,6 +52,7 @@ export default function Search() {
         type="text"
         placeholder="Поиск..."
         className="searchinput"
+        value={findedByName}
         onChange={e => setFindedByName(e.target.value)}
       />
       <button onClick={setFilters} >Фильтры</button>
