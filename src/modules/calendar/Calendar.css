@@ -1,4 +1,16 @@
 .calendar {
   box-shadow: 0 0px 4px 0 #666;
   border: 1px solid #ccc;
+  display: grid;
+  grid-template-rows: 1fr 8fr 1fr;
+}
+
+.calendar-grid-container {
+  margin-top: 15px;
+  margin-bottom: 15px;
+  height: 90%;
+}
+
+.calendar-buttons-container {
+  max-height: 50px;
 }

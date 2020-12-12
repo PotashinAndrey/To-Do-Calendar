@@ -3,11 +3,11 @@ import calculateMonth from './calculateMonth.js';
 import DayItem from './items/DayItem.jsx';
 import Item from './items/Item.jsx';
 
-export default function Grid({ rows, columns, onClick, active = {day: new Date().getDate(), month: 0 } }) {
+export default function Grid({ month, rows, columns, onClick, active = {day: new Date().getDate(), month: 0 } }) {
   const [activeItem, setActiveItem] = useState(active);
 
   let grid = [];
-  const monthData = calculateMonth();
+  const monthData = calculateMonth(month);
 
   function itemClick(day, month, monthDelta) {
     let validMonth = month + monthDelta;
@@ -45,9 +45,11 @@ export default function Grid({ rows, columns, onClick, active = {day: new Date()
     />);
   }
 
-  for (let i = 0; i < monthData.nextDays.length; i++) {
+  const lastWeek = monthData.beforeDays.length === 0 ? 35 - monthData.nowDays.length : monthData.nextDays.length;
+
+  for (let i = 0; i < lastWeek ; i++) {
     grid.push(<Item
-      day={monthData.nextDays[i]}
+      day={i + 1}
       month={monthData.month}
       monthDelta={1}
       key={'nextDays' + i}

@@ -9,7 +9,8 @@ const initialFilterState = {
     cost: 0,
     date: null,
     priority: '',
-    state: ''
+    state: '',
+    creationTime: null
   }
 }
 
@@ -32,7 +33,11 @@ const filterReducer = (state, action = initialFilterState) => {
 
   if (!action.notes && action.filters) {
     const filters = { ...state.filters, ...action.filters }
-    const data = { filterNotes: state.filterNotes, filters: filters };
+    const filtred = filterNotes(state.filterNotes, filters);
+
+    const data = { filterNotes: filtred, filters: filters };
+
+    console.log('!AN && AF');
 
     return data;
   }

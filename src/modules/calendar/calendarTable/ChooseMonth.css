@@ -1,0 +1,18 @@
+.chooseMonth {
+  display: grid;
+  grid-template-columns: 1fr 8fr 1fr;
+  align-items: center;
+  max-height: 50px;
+}
+
+.chooseMonth > p {
+  text-align: center;
+  height: 33px;
+  outline: 1px solid #999;
+  margin: 0;
+}
+
+.chooseMonth > button {
+  font-weight: 900;
+  height: 33px;
+}

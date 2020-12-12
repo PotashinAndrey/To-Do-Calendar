@@ -1,8 +1,9 @@
 import Data from '../data.js';
 
-export default function calculateMonth() {
-  const nowYear = new Date().getFullYear();
-  const nowMonth = new Date().getMonth();
+export default function calculateMonth(month) {
+  const date = new Date(new Date().getFullYear(), month , 1, 0, 0, 0, 0);
+  const nowYear = date.getFullYear();
+  const nowMonth = date.getMonth();
 
   const firstDayOfCurrentMonth  = new Date(nowYear, nowMonth, 1, 0, 0, 0, 0).getDay();
   const lastDayOfCurrentMonth   = new Date(nowYear, nowMonth + 1, 0, 0, 0, 0, 0).getDay();
