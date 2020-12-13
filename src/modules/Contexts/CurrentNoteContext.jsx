@@ -1,4 +1,5 @@
 import React, { useContext, useReducer } from 'react';
+import { act } from 'react-dom/test-utils';
 
 const CurrentNoteContext = React.createContext();
 
@@ -8,14 +9,22 @@ const initialCurrentNoteState = {
 
 const currentNoteReducer = (state, action = initialCurrentNoteState) => {
   if (action.currentNote) {
+    if (action.currentNote.children && state.currentNote?.children.includes(action.currentNote?.children[action.currentNote?.children?.length - 1])) {
+      return state;
+    }
+
+    if ( action.currentNote.children && state.currentNote && state.currentNote?.id === action.currentNote?.children[action.currentNote?.children?.length - 1]) {
+      return state;
+    }
+
     const data = { currentNote: { ...state.currentNote, ...action.currentNote } };
 
-    // console.log(data);
+    console.log(data);
     return data;
   }
 
   const data = { ...state, ...action };
-  // console.log(data);
+  console.log(data);
 
   return data;
 }

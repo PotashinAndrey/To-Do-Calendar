@@ -3,7 +3,7 @@ import './ListItem.css';
 import CheckBox from '../../utils/CheckBox.jsx';
 import useNotesContext from '../../Contexts/NotesContext.jsx';
 
-export default function ListItem({ note, onClick }) {
+export default function ListItem({ note, onClick, isCheckbox = true }) {
   const { notesDispatch } = useNotesContext();
 
   const style = { textDecoration: 'line-through' };
@@ -30,7 +30,7 @@ export default function ListItem({ note, onClick }) {
 
   return (
     <div style={{ background: priorityVariants[note.priority] }} onClick={() => { onClick(note) }} className="listitem">
-      <CheckBox done={note.state === 'todo' ? false : true} onClick={unChecked} />
+      { isCheckbox ? <CheckBox done={note.state === 'todo' ? false : true} onClick={unChecked} /> : <p></p> }
       <p
         className="name"
         style={note.state === 'done' || note.state === 'canceled' ? style : null}

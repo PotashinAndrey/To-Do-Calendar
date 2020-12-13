@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useState} from 'react';
 import './AboutEvent.css';
 import Selector from '../utils/Selector.jsx';
 import Portal from '../HOC/Portal.jsx'
@@ -8,13 +8,16 @@ import ChooseCost from './ChooseCost.jsx';
 import ChooseChildren from './ChooseChildren.jsx';
 import useCurrentNoteContext from '../Contexts/CurrentNoteContext.jsx';
 import useNotesContext from '../Contexts/NotesContext.jsx';
+import useFiltersContext from '../Contexts/FiltersContext.jsx';
 
 
 export default function AboutEvent() {
   const { currentNoteState, currentNoteDispatch } = useCurrentNoteContext();
+  const { filtersDispatch } = useFiltersContext();
   const { notesDispatch } = useNotesContext();
 
 const [ openModalDatePortal, setOpenModalDatePortal ] = useState(null);
+const [ openModalChildrenPortal, setOpenModalChildrenPortal ] = useState(null);
 
   function closeAboutEvent() {
     currentNoteDispatch();
@@ -46,15 +49,16 @@ const [ openModalDatePortal, setOpenModalDatePortal ] = useState(null);
   }
 
   function choiceChildren() {
-  //   setOpenModalChildrenPortal(<Portal id="root">
-  //     <Modal
-  //       text={{ header: 'Выберите подзадачи', main: 'Введите название' }}
-  //       isOpen={true}
-  //       onClick={() => setOpenModalChildrenPortal(null)}
-  //     >
-  //       <ChooseChildren />
-  //     </Modal>
-  //   </Portal>);
+    filtersDispatch();
+    setOpenModalChildrenPortal(<Portal id="root">
+      <Modal
+        text={{ header: 'Выберите подзадачи', main: 'Введите название' }}
+        isOpen={true}
+        onClick={() => setOpenModalChildrenPortal(null)}
+      >
+        <ChooseChildren />
+      </Modal>
+    </Portal>);
   }
 
   const priorityVariants = [
@@ -121,7 +125,7 @@ const [ openModalDatePortal, setOpenModalDatePortal ] = useState(null);
           <ChooseCost cost={currentNoteState.currentNote.cost} setCost={e => currentNoteDispatch({ currentNote: { cost: e } })} />
           <p>Выберете подзадачи: </p>
           <button onClick={choiceChildren} >Выбрать</button>
-          {/* {openModalChildrenPortal} */}
+          {openModalChildrenPortal}
         </span>
 
         <span className="aboutevent-delete">
