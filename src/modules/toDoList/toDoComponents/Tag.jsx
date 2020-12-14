@@ -1,9 +1,17 @@
-import React from 'react'
+import React, { useState } from 'react'
+import useFiltersContext from '../../Contexts/FiltersContext.jsx';
 import './Tag.css';
 
-export default function Tag() {
+export default function Tag({ name, filter, color }) {
+  const { filtersState, filtersDispatch } = useFiltersContext();
+
+  const [filters, setFilters] = useState(filter);
 
   return (
-    <span className="tag"> tag </span>
+    <span
+      className="tag"
+      onClick={() => filtersDispatch({filters: filters})}
+      style={{ background: color }}
+    >{name}</span>
   )
 }

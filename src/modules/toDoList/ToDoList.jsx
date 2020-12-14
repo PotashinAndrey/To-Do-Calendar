@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import './ToDoList.css';
 import Search from './toDoComponents/Search.jsx'
-import Tags from './toDoComponents/Tags.jsx'
+// import Tags from './toDoComponents/Tags.jsx'
 import NoteList from './NoteList/NoteList.jsx';
 import ListHeader from './toDoComponents/Listheader.jsx';
 import useNotesContext from '../Contexts/NotesContext.jsx';
@@ -26,7 +26,7 @@ export default function ToDoList() {
   return (
     <div className={gridClasses.join(' ')}>
       <Search />
-      <Tags />
+      {/* <Tags /> */}
       <NoteList
         list={filterNotesState.filterNotes}
         onClick={note => currentNoteDispatch({ currentNote: note })}

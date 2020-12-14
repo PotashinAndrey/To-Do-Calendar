@@ -11,6 +11,7 @@ const filterNotesReducer = (state, action = initialFilterNotesState) => {
   if (action.notes) {
     const data = { filterNotes: action.notes };
 
+    // console.log(data);
     return data;
   }
 
