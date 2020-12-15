@@ -1,0 +1,25 @@
+  .registration {
+    display: grid;
+    flex-direction: column;
+    width: 400px;
+    height: 400px;
+    border:  1px solid black;
+    border-radius: 10px;
+    box-shadow: 0 3px 7px gray;
+    justify-self: center;
+    justify-content: center;
+    align-self: center;
+}
+
+.registration > p {
+  margin: 0;
+}
+
+.registration > input {
+  height: 25px;
+}
+
+.registration > h1 {
+  margin: 0;
+  margin-top: 10px;
+}

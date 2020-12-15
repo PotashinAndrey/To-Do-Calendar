@@ -12,7 +12,7 @@ export default function Menu() {
 
   if (menuOpen) {
     classes.push('open');
-    img = <img className="icon" src="https://mywebicons.ru/i/png/a08bfa58bb97390a643b0c1848171b15.png" alt="меню" />
+    img = <img className="icon x" src="https://mywebicons.ru/i/png/a08bfa58bb97390a643b0c1848171b15.png" alt="меню" />
   } else {
     classes.push('close');
     img = <img className="icon" src="https://cdn.icon-icons.com/icons2/1302/PNG/128/menuoptions_85724.png" alt="меню" />;

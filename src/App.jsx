@@ -1,24 +1,28 @@
 import React from 'react';
+import { BrowserRouter, Route } from 'react-router-dom';
 import './App.css';
-import AboutEvent from './modules/aboutEvent/AboutEvent.jsx';
-import Note from './modules/note/Note.jsx';
-import Calendar from './modules/calendar/Calendar.jsx';
-import ToDoList from './modules/toDoList/ToDoList.jsx';
-import Menu from './navigation/Menu.jsx';
-import Drawer from './navigation/Drawer.jsx'
-import useCurrentNoteContext from './modules/Contexts/CurrentNoteContext.jsx';
+import MiniToDo from "./MiniToDo.jsx";
+import ContextsWrapper from './modules/HOC/ContextsWrapper.jsx';
+import Registration from './auth/register/Registration.jsx';
+import Login from './auth/login/Login.jsx';
 
 function App() {
-  const { currentNoteState } = useCurrentNoteContext();
 
   return (
     <div className="wrapper">
-      <Menu />
-      <div className="container">
-        <Calendar />
-        <ToDoList />
-        {currentNoteState.currentNote ? <AboutEvent /> : <Note />}
-      </div>
+      <BrowserRouter>
+
+        <Route path="/registration" exact component={Registration} />
+        <Route path="/" exact component={Login} />
+
+        <Route path="/mini" component={() => {
+          return (
+            <ContextsWrapper >
+              <MiniToDo />
+            </ContextsWrapper>
+          )
+        }} />
+      </BrowserRouter>
     </div>
   );
 }

@@ -6,10 +6,8 @@ import ContextsWrapper from './modules/HOC/ContextsWrapper.jsx';
 
 
 ReactDOM.render(
-  <ContextsWrapper >
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>
-  </ContextsWrapper>,
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
   document.getElementById('root')
 );
