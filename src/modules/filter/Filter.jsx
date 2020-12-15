@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Selector from '../utils/Selector.jsx'
 import ChooseCost from '../aboutEvent/ChooseCost.jsx';
 import Grid from '../calendar/calendarTable/Grid.jsx';

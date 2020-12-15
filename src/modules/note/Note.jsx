@@ -6,7 +6,7 @@ import NoteClass from '../Model/NoteClass.js';
 export default function Note() {
   const [name, setName] = useState('');
   const [discription, setDiscription] = useState('');
-  const { notesState, notesDispatch } = useNotesContext();
+  const { notesDispatch } = useNotesContext();
 
   function createNote() {
     if (name.length === 0) return;

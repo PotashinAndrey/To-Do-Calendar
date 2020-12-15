@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './Modal.css';
 
 export default function Modal({ children, text = null, onClick, isOpen}) {
