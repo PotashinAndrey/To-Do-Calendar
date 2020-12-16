@@ -1,9 +1,13 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import Link from './Link.jsx';
+// import { useToken } from '../auth/useToken.jsx';
+import useTokenContext from '../modules/Contexts/TokenContext.jsx';
 import './Drawer.css';
 
 export default function Drawer({ open }) {
+  const {tokenState, tokenDispatch} = useTokenContext();
+  // const { logout } = useToken();
   const classes = ["drawer"];
 
   if (!open) {
@@ -13,8 +17,9 @@ export default function Drawer({ open }) {
   const history = useHistory();
 
   function logoutHandler() {
+    tokenState.logout();
 
-    history.push('/');
+    // history.push('/');
   }
 
   return (
