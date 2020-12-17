@@ -30,6 +30,7 @@ export default function ToDoList() {
       <NoteList
         list={filterNotesState.filterNotes}
         onClick={note => currentNoteDispatch({ currentNote: note })}
+        checkbox={true}
       >
         <ListHeader />
       </NoteList>

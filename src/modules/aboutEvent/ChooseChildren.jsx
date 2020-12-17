@@ -29,6 +29,7 @@ export default function ChooseChildren() {
         style={{height: '300px'}}
         list={filterNotesState.filterNotes}
         onClick={note => currentNoteDispatch({ currentNote: {children: [...currentNoteState.currentNote.children, note.id]} })}
+        checkbox={false}
       >
 
       </NoteList>
