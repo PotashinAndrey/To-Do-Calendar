@@ -1,9 +1,0 @@
-.calendarItem {
-  height: 100%;
-}
-
-.calendarItem:hover {
-  outline: 1px solid #888;
-  background: #ccc;
-}
-

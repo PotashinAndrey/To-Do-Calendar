@@ -11,9 +11,7 @@ const initialTokenState = {
 }
 
 const tokenReducer = (state, action) => {
-  const data = {...state, action};
-
-  console.log('TCreducer', data);
+  const data = {...state, ...action};
 
   return data;
 }

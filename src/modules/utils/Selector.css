@@ -1,7 +1,0 @@
-.selector {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  justify-items: center;
-  border-bottom: 1px solid gray;
-  margin: 10px;
-}

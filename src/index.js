@@ -2,12 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App.jsx';
-import ContextsWrapper from './modules/HOC/ContextsWrapper.jsx';
-
+import { TokenContextProvider, tokenReducer, initialTokenState } from './Contexts/TokenContext.jsx';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <TokenContextProvider reducer={tokenReducer} initState={initialTokenState}>
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>
+  </TokenContextProvider>,
   document.getElementById('root')
 );
