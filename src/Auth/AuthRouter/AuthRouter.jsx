@@ -22,8 +22,8 @@ const AuthRouter = () => {
 
   const routes = token ? (
     <>
-      <Route path="/registration" exact component={} />
-      <Route path="/login" exact component={} />
+      <Route path="/registration" exact component={Registration} />
+      <Route path="/login" exact component={Login} />
       <Redirect to="/login" />
     </>
   ) : (
@@ -38,7 +38,9 @@ const AuthRouter = () => {
     );
 
   return (
-    { routes }
+    <>
+      { routes}
+    </>
   )
 }
 
