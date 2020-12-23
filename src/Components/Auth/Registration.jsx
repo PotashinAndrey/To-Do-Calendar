@@ -35,9 +35,10 @@ const Registration = () => {
     try {
       await request('/api/auth/register', 'POST', { email: form.email, password: form.password, name: form.name });
 
-      history.push("/");
+      history.push("/login");
     } catch (e) {
-      console.log(e.message);
+
+      setProblems({type: 'error', text: e.message === 'email is exist yet' ? 'Аккаунт с таким email уже существует.' : 'Ошибка' });
     }
   }
 

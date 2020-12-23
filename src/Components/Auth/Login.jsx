@@ -23,8 +23,8 @@ const Login = () => {
   const onClose = () => setProblems(undefined);
 
   async function loginHandler() {
-    if (checkFields({email, password})) {
-      setProblems(checkFields({email, password}));
+    if (checkFields({ email, password })) {
+      setProblems(checkFields({ email, password }));
       return;
     }
 
@@ -33,7 +33,22 @@ const Login = () => {
 
       tokenState.login(data.token, data.userId);
     } catch (e) {
-      console.log(e.message);
+      let message = undefined;
+      switch (e.message) {
+        case 'user not found':
+          message = 'Пользователь не существует.';
+          break;
+
+        case 'wrong password':
+          message = 'Неверный пароль.';
+          break;
+
+        default:
+          message = "Ошибка.";
+          break;
+      }
+
+      setProblems({ type: 'error', text: message });
     }
   }
 
