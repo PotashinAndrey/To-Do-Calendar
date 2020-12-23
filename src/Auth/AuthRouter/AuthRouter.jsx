@@ -20,7 +20,7 @@ const AuthRouter = () => {
     });
   }, [token]);
 
-  const routes = token ? (
+  const routes = !token ? (
     <>
       <Route path="/registration" exact component={Registration} />
       <Route path="/login" exact component={Login} />
