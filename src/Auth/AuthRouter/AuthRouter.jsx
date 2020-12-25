@@ -5,6 +5,7 @@ import useTokenContext from '../../Contexts/TokenContext.jsx';
 import ContextsWrapper from '../../Contexts/ContextsWrapper.jsx';
 import Login from "../../Components/Auth/Login.jsx";
 import Registration from "../../Components/Auth/Registration.jsx";
+import Mini from '../../Components/Mini/Mini.jsx';
 
 const AuthRouter = () => {
   const { token, login, logout, userId } = useToken();
@@ -30,7 +31,7 @@ const AuthRouter = () => {
       <>
         <Route path="/" exact>
           <ContextsWrapper>
-
+            <Mini />
           </ContextsWrapper>
         </Route>
         <Redirect to="/" />

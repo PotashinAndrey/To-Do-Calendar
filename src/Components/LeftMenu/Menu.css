@@ -1,0 +1,28 @@
+.menu {
+  position: fixed;
+  top: 40px;
+  left: 40px;
+  /* font-size: 20px; */
+  cursor: pointer;
+  color: black;
+  z-index: 100;
+  transition: all 0.25s ease-in;
+}
+
+.menu:hover {
+  opacity: 0.7;
+}
+
+.menu.open {
+  left: 320px;
+}
+
+.icon {
+  width: 25px;
+
+}
+
+.x {
+  background: white;
+  border-radius: 5px;
+}
