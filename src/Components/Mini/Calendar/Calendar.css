@@ -1,0 +1,6 @@
+.calendar-wrapper {
+  box-shadow: 0 0px 4px 0 #666;
+  outline: 1px solid #ccc;
+  display: grid;
+  grid-template-rows: 1fr 8fr 1fr;
+}

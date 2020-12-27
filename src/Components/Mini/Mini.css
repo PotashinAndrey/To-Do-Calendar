@@ -5,20 +5,20 @@
   display: grid;
   grid-template-columns: 3fr 5fr;
   grid-template-rows: 4fr 3fr 3fr;
-  grid-template-areas:"calendar toDoList"
-                      "note toDoList"
-                      "note toDoList";
+  grid-template-areas:"C1-R1 C2-R1"
+                      "C1-R2 C2-R1"
+                      "C1-R2 C2-R1";
   grid-gap: 5px;
 }
 
-.calendar {
-  grid-area: calendar;
+.C1-R1 {
+  grid-area: C1-R1;
 }
 
-.toDoList {
-  grid-area: toDoList;
+.C2-R1 {
+  grid-area: C2-R1;
 }
 
-.note {
-  grid-area: note;
+.C1-R2 {
+  grid-area: C1-R2;
 }

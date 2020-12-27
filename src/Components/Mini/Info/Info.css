@@ -1,0 +1,6 @@
+.info-wrapper {
+  display: grid;
+  flex-direction: column;
+  outline: 1px solid #ccc;
+  box-shadow: 0 4px 4px 0 #666;
+}

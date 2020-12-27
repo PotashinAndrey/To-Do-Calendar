@@ -1,0 +1,5 @@
+.addSmall-wrapper {
+  display: grid;
+  row-gap: 15px;
+  margin-bottom: 20px;
+}

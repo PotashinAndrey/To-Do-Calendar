@@ -1,0 +1,11 @@
+.listToggle-wrapper {
+  outline: 1px solid #ccc;
+  box-shadow: 0 2px 2px 0 #666;
+  height: 39px;
+}
+
+.listTogle-radiogroup {
+  display: grid !important;
+  width: 100%;
+  grid-template-columns: 1fr 1fr 1fr;
+}
