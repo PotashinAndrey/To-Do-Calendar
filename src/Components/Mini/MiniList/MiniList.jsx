@@ -4,49 +4,28 @@ import List from '../../List/List.jsx';
 import ListToggle from '../ListToggle/ListToggle.jsx';
 import Search from '../../Search/Search.jsx';
 import Button from "antd-button-color";
-import Portal from '../../../Portal/Portal.jsx';
-import { useHttp } from '../../../Requests/useHttp.jsx';
-import useTokenContext from '../../../Contexts/TokenContext.jsx';
-import { Modal } from 'antd';
+// import { useHttp } from '../../../Requests/useHttp.jsx';
+// import useTokenContext from '../../../Contexts/TokenContext.jsx';
 import AddSmallNote from '../AddSmallNote/AddSmallNote.jsx';
+import ListHeader from '../../List/ListHeader.jsx';
+import filters from './filters.js';
 
 const MiniList = ({ className }) => {
-  const { loading, request } = useHttp();
-  const { tokenState } = useTokenContext();
+  // const { loading, request } = useHttp();
+  // const { tokenState } = useTokenContext();
+
   const [listType, setListType] = useState('doings');
   const [visible, setVisible] = useState(false);
-  const [newItem, setNewItem] = useState(null);
 
   const types = {
-    doings: "дела",
-    purchases: "покупки",
-    notes: "заметки"
+    doings: "Время",
+    purchases: "Цена",
+    notes: "Создано"
   }
 
   const searchHandler = (string) => {
     console.log(string);
   }
-
-  const addItem = async () => {
-    console.log(newItem)
-    if (!newItem || !newItem.name) return;
-
-    try {
-      const data = await request('/api/note/create', 'POST', newItem, { Authorization: tokenState.token });
-
-      console.log(data);
-    } catch (e) {
-      console.log(e.message);
-    }
-
-    setNewItem(null);
-    setVisible(false);
-  }
-
-  const handleCancel = () => {
-    setNewItem(null);
-    setVisible(false);
-  };
 
   return (
     <>
@@ -60,19 +39,15 @@ const MiniList = ({ className }) => {
             onClick={() => setVisible(true)}
           > Добавить </Button>
         </div>
-        <List listType={listType} />
+        <List listType={listType} filter={filters[listType]} >
+          <ListHeader name="Название" dis="Описание" time={types[listType]} />
+        </List>
       </div>
-      <Modal
-        title={`Создание ${types[listType]}`}
+      <AddSmallNote
+        listType={listType}
         visible={visible}
-        onOk={addItem}
-        confirmLoading={loading}
-        onCancel={handleCancel}
-        okText="Создать"
-        cancelText="Отменить"
-      >
-        <AddSmallNote type={listType} addNote={setNewItem} newNote={newItem}/>
-      </Modal>
+        setVisible={setVisible}
+      />
     </>
   )
 }

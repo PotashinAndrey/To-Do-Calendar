@@ -6,34 +6,13 @@ const initialNotesState = {
   notes: []
 }
 
-const notesReducer = (state, note = initialNotesState) => {
-  if (isElementExist(state, note.id)) {
-    const idArray = state.notes.map(e => e.id);
-    const index = idArray.indexOf(note.id);
+const notesReducer = (state, notes = initialNotesState) => {
 
-    if (note.deleted) {
-      state.notes.splice(index, 1);
-      // console.log({ ...state })
-      return { ...state };
-    }
+  const data = { ...state, ...notes};
 
-    state.notes[index] = note;
+  console.log(data)
+  return data;
 
-    const data = { ...state }
-    // console.log(data)
-    return data;
-  }
-
-  if (note.id && note.id.length !== 0) {
-    const data = { notes: [...state.notes, note] };
-
-    // console.log(data)
-    return data;
-  }
-
-  // console.log(state)
-
-  return state;
 }
 
 const NotesContextProvider = props => {

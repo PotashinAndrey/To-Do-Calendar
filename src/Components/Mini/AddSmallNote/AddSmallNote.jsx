@@ -1,20 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import { Input } from 'antd';
 import { DatePicker } from 'antd';
+import { Modal } from 'antd';
+import { useHttp } from '../../../Requests/useHttp.jsx';
+import useTokenContext from '../../../Contexts/TokenContext.jsx';
 import './AddSmallNote.css';
 
-const AddSmallNote = ({ type, addNote, newNote }) => {
-  const types = {
-    doings: "deadline",
-    purchases: "cost",
-    notes: 'ignore'
-  }
+const AddSmallNote = ({ listType, visible, setVisible }) => {
+  const { loading, request } = useHttp();
+  const { tokenState } = useTokenContext();
 
   const [note, setNote] = useState({
     name: '',
     discription: '',
-    [types[type]]: type === 'doings' ? new Date() : 0
+    cost: undefined,
+    deadline: undefined
   });
+
+  const types = {
+    doings: "дела",
+    purchases: "покупки",
+    notes: "заметки"
+  }
 
   function changeHandler(event) {
     setNote({ ...note, [event.target.name]: event.target.value });
@@ -24,42 +31,39 @@ const AddSmallNote = ({ type, addNote, newNote }) => {
     setNote({ ...note, deadline: value._d });
   }
 
-  useEffect(() => {
-    if (!note.name || !note.name.length || note.cost && +note.cost <= 0 || note.deadline && note.deadline.getTime() <= new Date().getTime()) {
-      addNote(null);
-      return;
+  const addItem = async () => {
+    try {
+      const data = await request('/api/note/create', 'POST', note, { Authorization: tokenState.token });
+
+      console.log(data);
+    } catch (e) {
+      console.log(e.message);
     }
 
-    addNote(note);
-  }, [note]);
-
-  useEffect(() => {
-    if (newNote !== null) return;
-
-    setNote({
-      name: '',
-      discription: '',
-      [types[type]]: type === 'doings' ? new Date() : 0
-    });
-  }, [newNote]);
-
-  let variants;
-
-  if (type === 'notes') {
-    variants = null;
-  } else if (type === 'purchases') {
-    variants = <Input name="cost" value={note.cost} onChange={e => changeHandler(e)} placeholder="Цена..." />
-  } else {
-    variants = <DatePicker showTime onOk={onOk} />
+    setVisible(false);
   }
 
+  const handleCancel = () => {
+    setVisible(false);
+  };
 
   return (
-    <div className="addSmall-wrapper">
+
+    <Modal
+      title={`Создание ${types[listType]}`}
+      visible={visible}
+      onOk={addItem}
+      confirmLoading={loading}
+      onCancel={handleCancel}
+      okText="Создать"
+      cancelText="Отменить"
+    >
       <Input name="name" value={note.name} onChange={e => changeHandler(e)} placeholder="Название..." />
       <Input name="discription" value={note.discription} onChange={e => changeHandler(e)} placeholder="Описание..." />
-      {variants}
-    </div>
+      <Input name="cost" value={note.cost} onChange={e => changeHandler(e)} placeholder="Цена..." />
+      <DatePicker placeholder="Выберите дату события" showTime onOk={onOk} />
+    </Modal>
+
   )
 }
 

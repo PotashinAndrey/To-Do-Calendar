@@ -2,4 +2,12 @@
   display: grid;
   grid-template-columns: 1fr 2fr 1fr;
   column-gap: 5px;
+  border-bottom: 1px solid black;
+  height: 40px;
+}
+
+.listItem {
+  margin: 5px;
+  margin-left: 15px;
+  justify-self: center;
 }
