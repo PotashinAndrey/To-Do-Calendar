@@ -1,0 +1,13 @@
+.calendarItem {
+  height: 100%;
+  width: 100%;
+  display: grid;
+  justify-content: center;
+  align-content: center;
+}
+
+.calendarItem:hover {
+  outline: 1px solid #888;
+  background: #ccc;
+}
+
