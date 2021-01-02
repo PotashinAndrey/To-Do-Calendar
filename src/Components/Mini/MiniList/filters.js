@@ -31,13 +31,13 @@ function filtration(notes, filter) {
 
   for (let key in filter) {
     filtred = filtred.filter(e => {
-      console.log(key, e[key], filter[key], !e[key] === !filter[key]);
+      // console.log(key, e[key], filter[key], !e[key] === !filter[key]);
 
       return !e[key] === !filter[key];
     });
   }
 
-  console.log(filtred);
+  // console.log(filtred);
   return filtred;
 }
 

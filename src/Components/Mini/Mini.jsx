@@ -22,7 +22,7 @@ const Mini = () => {
     try {
       const data = await request('/api/note/all', 'GET', null, { Authorization: tokenState.token });
 
-      console.log(data);
+      // console.log(data);
       notesDispatch({notes: data});
     } catch (e) {
       console.log(e.message);

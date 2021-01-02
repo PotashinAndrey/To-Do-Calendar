@@ -10,7 +10,7 @@ const notesReducer = (state, notes = initialNotesState) => {
 
   const data = { ...state, ...notes};
 
-  console.log(data)
+  // console.log(data)
   return data;
 
 }
