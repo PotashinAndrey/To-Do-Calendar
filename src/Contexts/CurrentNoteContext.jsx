@@ -8,21 +8,6 @@ const initialCurrentNoteState = {
 }
 
 const currentNoteReducer = (state, action = initialCurrentNoteState) => {
-  if (action.currentNote) {
-    if (action.currentNote.children && state.currentNote?.children.includes(action.currentNote?.children[action.currentNote?.children?.length - 1])) {
-      return state;
-    }
-
-    if ( action.currentNote.children && state.currentNote && state.currentNote?.id === action.currentNote?.children[action.currentNote?.children?.length - 1]) {
-      return state;
-    }
-
-    const data = { currentNote: { ...state.currentNote, ...action.currentNote } };
-
-    console.log(data);
-    return data;
-  }
-
   const data = { ...state, ...action };
   console.log(data);
 

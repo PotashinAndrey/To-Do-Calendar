@@ -4,11 +4,13 @@ import { DatePicker } from 'antd';
 import { Modal } from 'antd';
 import { useHttp } from '../../../Requests/useHttp.jsx';
 import useTokenContext from '../../../Contexts/TokenContext.jsx';
+import useNotesContext from '../../../Contexts/NotesContext.jsx';
 import './AddSmallNote.css';
 
 const AddSmallNote = ({ listType, visible, setVisible }) => {
   const { loading, request } = useHttp();
   const { tokenState } = useTokenContext();
+  const { notesDispatch } = useNotesContext();
 
   const [note, setNote] = useState({
     name: '',
@@ -33,9 +35,10 @@ const AddSmallNote = ({ listType, visible, setVisible }) => {
 
   const addItem = async () => {
     try {
-      const data = await request('/api/note/create', 'POST', note, { Authorization: tokenState.token });
+      await request('/api/note/create', 'POST', note, { Authorization: tokenState.token });
+      const data = await request('/api/note/all', 'GET', null, { Authorization: tokenState.token });
 
-      console.log(data);
+      notesDispatch({ notes: data });
     } catch (e) {
       console.log(e.message);
     }

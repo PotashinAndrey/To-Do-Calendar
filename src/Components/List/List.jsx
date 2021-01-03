@@ -1,11 +1,17 @@
 import React from 'react';
 import useNotesContext from '../../Contexts/NotesContext.jsx';
+import useCurrentNoteContext from '../../Contexts/CurrentNoteContext.jsx';
 import filters from '../Mini/MiniList/filters.js';
 import ListItem from './ListItem.jsx';
 import './List.css';
 
 const List = ({ listType, filter, children }) => {
   const { notesState } = useNotesContext();
+  const { currentNoteDispatch } = useCurrentNoteContext();
+
+  function itemClick(note) {
+    currentNoteDispatch({currentNote: note});
+  }
 
   const types = {
     doings: "deadline",
@@ -14,10 +20,9 @@ const List = ({ listType, filter, children }) => {
   }
 
   let sorted = notesState.notes.slice();
-  sorted.sort((a,b) => {
-    const compare = a[types[listType]] === undefined ? '0': a[types[listType]];
-    const compareb = b[types[listType]] === undefined ? '0': b[types[listType]];
-    console.log(a, b, compare, compareb, compare > compareb);
+  sorted.sort((a, b) => {
+    const compare = a[types[listType]] === undefined ? '0' : a[types[listType]];
+    const compareb = b[types[listType]] === undefined ? '0' : b[types[listType]];
     if (compare < compareb) return -1;
     if (compare === compareb) return 0;
     if (compare > compareb) return 1;
@@ -25,6 +30,7 @@ const List = ({ listType, filter, children }) => {
 
   const items = filters.filtration(sorted, filter)
     .map(e => <ListItem
+      onClick={itemClick}
       note={e}
       thirdProp={types[listType] === 'cost' ? e[types[listType]] : e[types[listType]]
         .slice(0, e[types[listType]].length - 5)
