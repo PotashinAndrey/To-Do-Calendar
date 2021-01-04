@@ -19,7 +19,7 @@ export default function Drawer({ open }) {
     try {
       const data = await request(str, method, obj, { Authorization: tokenState.token });
 
-      console.log(data);
+      // console.log(data);
     } catch (e) {
       console.log(e.message);
     }

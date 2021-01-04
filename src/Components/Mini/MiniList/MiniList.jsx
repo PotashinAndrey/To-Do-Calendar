@@ -6,6 +6,7 @@ import Search from '../../Search/Search.jsx';
 import Button from "antd-button-color";
 // import { useHttp } from '../../../Requests/useHttp.jsx';
 // import useTokenContext from '../../../Contexts/TokenContext.jsx';
+import useFiltersContext from '../../../Contexts/FiltersContext.jsx';
 import AddSmallNote from '../AddSmallNote/AddSmallNote.jsx';
 import ListHeader from '../../List/ListHeader.jsx';
 import filters from './filters.js';
@@ -13,6 +14,7 @@ import filters from './filters.js';
 const MiniList = ({ className }) => {
   // const { loading, request } = useHttp();
   // const { tokenState } = useTokenContext();
+  const { filtersState, filtersDispatch } = useFiltersContext();
 
   const [listType, setListType] = useState('doings');
   const [visible, setVisible] = useState(false);
@@ -24,7 +26,7 @@ const MiniList = ({ className }) => {
   }
 
   const searchHandler = (string) => {
-    console.log(string);
+    filtersDispatch({ filters: { name: string.toLowerCase().trim() } });
   }
 
   return (
@@ -32,7 +34,9 @@ const MiniList = ({ className }) => {
       <div className={className + ' minilist-wrapper'}>
         <ListToggle listType={listType} setListType={setListType} />
         <div className="search-wrapper">
-          <Search searchHandler={searchHandler} />
+          <Search
+            searchHandler={searchHandler}
+          />
           <Button
             type="success"
             size="large"

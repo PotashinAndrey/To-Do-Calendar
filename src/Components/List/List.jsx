@@ -1,6 +1,7 @@
 import React from 'react';
 import useNotesContext from '../../Contexts/NotesContext.jsx';
 import useCurrentNoteContext from '../../Contexts/CurrentNoteContext.jsx';
+import useFiltersContext, { filtredNotes } from '../../Contexts/FiltersContext.jsx';
 import filters from '../Mini/MiniList/filters.js';
 import ListItem from './ListItem.jsx';
 import './List.css';
@@ -8,9 +9,10 @@ import './List.css';
 const List = ({ listType, filter, children }) => {
   const { notesState } = useNotesContext();
   const { currentNoteDispatch } = useCurrentNoteContext();
+  const { filtersState, filtersDispatch } = useFiltersContext();
 
   function itemClick(note) {
-    currentNoteDispatch({currentNote: note});
+    currentNoteDispatch({ currentNote: note });
   }
 
   const types = {
@@ -19,7 +21,7 @@ const List = ({ listType, filter, children }) => {
     notes: "created"
   }
 
-  let sorted = notesState.notes.slice();
+  let sorted = filtredNotes(notesState.notes.slice(), filtersState.filters);
   sorted.sort((a, b) => {
     const compare = a[types[listType]] === undefined ? '0' : a[types[listType]];
     const compareb = b[types[listType]] === undefined ? '0' : b[types[listType]];

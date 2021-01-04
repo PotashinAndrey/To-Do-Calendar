@@ -7,10 +7,10 @@ const initialFiltersState = {
   filters: {
     name: '',
     cost: undefined,
-    date: undefined,
+    deadline: undefined,
     priority: undefined,
     state: undefined,
-    creationTime: undefined
+    created: undefined
   }
 }
 
@@ -38,15 +38,15 @@ const useFiltersContext = () => useContext(FiltersContext);
 
 function filtredNotes(toFilter, filters) {
   // console.log(toFilter, filters);
-  const filtredByName = toFilter.filter(e => e.name.includes(filters.name));
+  const filtredByName = toFilter.filter(e => e.name.toLowerCase().trim().includes(filters.name));
   const filtredByCost = filters.cost && filters.cost >= 0 ? filtredByName.filter(
     e => +e.cost <= +filters.cost
   ) : filtredByName;
-  const filtredByDate = filters.date ? filtredByCost.filter(
+  const filtredByDate = filters.deadline ? filtredByCost.filter(
     e => {
-      return (e.date?.getMonth() <= filters.date?.getMonth() &&
-        e.date?.getDate() <= filters.date?.getDate() &&
-        e.date?.getFullYear() <= filters.date.getFullYear());
+      return (e.deadline?.getMonth() <= filters.deadline?.getMonth() &&
+        e.deadline?.getDate() <= filters.deadline?.getDate() &&
+        e.deadline?.getFullYear() <= filters.deadline.getFullYear());
     }
   ) : filtredByCost;
   const filtredByPriority = filters.priority ? filtredByDate.filter(
@@ -55,13 +55,13 @@ function filtredNotes(toFilter, filters) {
   const filtredByState = filters.state ? filtredByPriority.filter(
     e => e.state === filters.state
   ) : filtredByPriority;
-  const filtredByCreationTime = filters.creationTime ? filtredByState.filter(e => {
-    return (e.creationTime.getFullYear() === filters.creationTime.getFullYear() &&
-      e.creationTime.getMonth() === filters.creationTime.getMonth() &&
-      e.creationTime.getDate() === filters.creationTime.getDate());
+  const filtredByCreationTime = filters.created ? filtredByState.filter(e => {
+    return (e.created.getFullYear() === filters.created.getFullYear() &&
+      e.created.getMonth() === filters.created.getMonth() &&
+      e.created.getDate() === filters.created.getDate());
   }) : filtredByState;
 
-  // console.log(filtredByState);
+  // console.log(filtredByName);
 
   return filtredByCreationTime;
 }

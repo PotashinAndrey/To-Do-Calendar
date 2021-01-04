@@ -58,5 +58,3 @@ const Info = ({ className }) => {
 }
 
 export default Info;
-{/*
-.slice(0, e[types[listType]].length - 5).split('T').join(' ') */}

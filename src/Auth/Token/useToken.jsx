@@ -8,7 +8,7 @@ export const useToken = () => {
     setToken(jwtToken);
     setUserId(id);
 
-    console.log('login! ');
+    // console.log('login! ');
 
     localStorage.setItem('userData', JSON.stringify({userId: id, token: jwtToken}));
   } , []);
@@ -17,7 +17,7 @@ export const useToken = () => {
     setToken(null);
     setUserId(null);
 
-    console.log('logout! ');
+    // console.log('logout! ');
 
     localStorage.removeItem('userData');
   } , []);

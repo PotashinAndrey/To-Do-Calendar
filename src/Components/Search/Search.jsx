@@ -13,11 +13,19 @@ const SearchSomefing = ({ searchHandler }) => {
 
   return (
     <Search
+      allowClear
       placeholder="Поиск..."
       onSearch={onSearch}
       enterButton
       value={string}
-      onChange={e => setString(e.target.value)}
+      onChange={e => {
+        if (e.type === 'click') {
+          searchHandler('');
+          // setString('');
+        }
+
+        setString(e.target.value);
+      }}
     />
   )
 }
