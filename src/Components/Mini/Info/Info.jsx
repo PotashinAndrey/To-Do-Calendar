@@ -43,8 +43,8 @@ const Info = ({ className }) => {
     </div>
     <Text type="secondary">{currentNoteState.currentNote.discription ? currentNoteState.currentNote.discription : 'Нет описания'}</Text>
     <Text>{currentNoteState.currentNote.cost ? 'Цена: ' + currentNoteState.currentNote.cost + ' рублей' : 'Цена не установленна'}</Text>
-    <Text>{currentNoteState.currentNote.deadline ? 'Срок выполнения: ' + currentNoteState.currentNote.deadline.slice(0, currentNoteState.currentNote.deadline.length - 5).split('T').join(' ') : 'Нет срока выполнения'}</Text>
-    <Text>{'Дата создания: ' + currentNoteState.currentNote.created.slice(0, currentNoteState.currentNote.created.length - 5).split('T').join(' ')}</Text>
+    <Text>{currentNoteState.currentNote.deadline ? 'Срок выполнения: ' + new Date(currentNoteState.currentNote.deadline).toLocaleString() : 'Нет срока выполнения'}</Text>
+    <Text>{'Дата создания: ' + new Date(currentNoteState.currentNote.created).toLocaleString()}</Text>
     <div>
       <Button loading={loading} onClick={deleteHandler} >Удалить</Button>
       <Button loading={loading} onClick={() => setVisible(true)}>Редактировать</Button>

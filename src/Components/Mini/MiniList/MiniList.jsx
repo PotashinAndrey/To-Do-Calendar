@@ -4,16 +4,12 @@ import List from '../../List/List.jsx';
 import ListToggle from '../ListToggle/ListToggle.jsx';
 import Search from '../../Search/Search.jsx';
 import Button from "antd-button-color";
-// import { useHttp } from '../../../Requests/useHttp.jsx';
-// import useTokenContext from '../../../Contexts/TokenContext.jsx';
 import useFiltersContext from '../../../Contexts/FiltersContext.jsx';
 import AddSmallNote from '../AddSmallNote/AddSmallNote.jsx';
 import ListHeader from '../../List/ListHeader.jsx';
 import filters from './filters.js';
 
 const MiniList = ({ className }) => {
-  // const { loading, request } = useHttp();
-  // const { tokenState } = useTokenContext();
   const { filtersState, filtersDispatch } = useFiltersContext();
 
   const [listType, setListType] = useState('doings');

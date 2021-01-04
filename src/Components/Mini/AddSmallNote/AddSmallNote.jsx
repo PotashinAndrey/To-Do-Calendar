@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Input, Modal, DatePicker } from 'antd';
+import { Input, Modal, DatePicker, Typography } from 'antd';
 import { useHttp } from '../../../Requests/useHttp.jsx';
 import useTokenContext from '../../../Contexts/TokenContext.jsx';
 import useNotesContext from '../../../Contexts/NotesContext.jsx';
@@ -17,6 +17,8 @@ const AddSmallNote = ({ listType, visible, setVisible }) => {
     deadline: undefined
   });
 
+  const { Title, Text } = Typography;
+
   const types = {
     doings: "дела",
     purchases: "покупки",
@@ -33,7 +35,6 @@ const AddSmallNote = ({ listType, visible, setVisible }) => {
 
   const addItem = async () => {
     try {
-      console.log(note)
       await request('/api/note/create', 'POST', note, { Authorization: tokenState.token });
       const data = await request('/api/note/all', 'GET', null, { Authorization: tokenState.token });
 
@@ -43,14 +44,25 @@ const AddSmallNote = ({ listType, visible, setVisible }) => {
     }
 
     setVisible(false);
+    setNote({
+      name: '',
+      discription: '',
+      cost: undefined,
+      deadline: undefined
+    });
   }
 
   const handleCancel = () => {
     setVisible(false);
+    setNote({
+      name: '',
+      discription: '',
+      cost: undefined,
+      deadline: undefined
+    });
   };
 
   return (
-
     <Modal
       title={`Создание ${types[listType]}`}
       visible={visible}
@@ -60,10 +72,16 @@ const AddSmallNote = ({ listType, visible, setVisible }) => {
       okText="Создать"
       cancelText="Отменить"
     >
-      <Input name="name" value={note.name} onChange={e => changeHandler(e)} placeholder="Название..." />
-      <Input name="discription" value={note.discription} onChange={e => changeHandler(e)} placeholder="Описание..." />
-      <Input name="cost" value={note.cost} onChange={e => changeHandler(e)} placeholder="Цена..." />
-      <DatePicker placeholder="Выберите дату события" showTime onOk={onOk} />
+      <div className="editNote-wrapper">
+        <Title level={4}>Название:</Title>
+        <Input name="name" value={note.name} onChange={e => changeHandler(e)} placeholder="Название..." />
+        <Text>Описание:</Text>
+        <Input name="discription" value={note.discription} onChange={e => changeHandler(e)} placeholder="Описание..." />
+        <Text>Цена:</Text>
+        <Input name="cost" value={note.cost} onChange={e => changeHandler(e)} placeholder="Цена..." />
+        <Text>Срок:</Text>
+        <DatePicker placeholder="Выберите дату события" showTime onOk={onOk} />
+      </div>
     </Modal>
 
   )

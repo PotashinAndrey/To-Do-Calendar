@@ -35,10 +35,7 @@ const List = ({ listType, filter, children }) => {
       key={e._id}
       onClick={itemClick}
       note={e}
-      thirdProp={types[listType] === 'cost' ? e[types[listType]] : e[types[listType]]
-        .slice(0, e[types[listType]].length - 5)
-        .split('T')
-        .join(' ')}
+      thirdProp={types[listType] === 'cost' ? e[types[listType]] : new Date(e[types[listType]]).toLocaleString()}
     />);
 
   return (
@@ -50,3 +47,5 @@ const List = ({ listType, filter, children }) => {
 }
 
 export default List;
+
+//.slice(0, e[types[listType]].length - 5).split('T').join(' ')

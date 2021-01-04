@@ -1,9 +1,16 @@
 .info-wrapper {
   display: grid;
-  flex-direction: column;
   outline: 1px solid #ccc;
   box-shadow: 0 4px 4px 0 #666;
-  max-width: 100%;
+  max-width: 410.63px;
+}
+
+.info-wrapper span {
+  overflow-wrap: anywhere;
+}
+
+.info-wrapper h4 {
+  overflow-wrap: anywhere;
 }
 
 .noCurrentNote {

@@ -46,7 +46,6 @@ const EditNote = ({ visible, setVisible }) => {
   };
 
   function onOk(value) {
-    console.log(value._d);
     setNote({ ...note, deadline: value._d });
   }
 
@@ -79,7 +78,7 @@ const EditNote = ({ visible, setVisible }) => {
         <Text>Цена:</Text>
         <Input name="cost" value={note.cost} onChange={e => changeHandler(e)} placeholder="Цена..." />
         <Text>Срок:</Text>
-        <DatePicker value={moment(new Date(note.deadline), 'YYYY-MM-DD, hh:mm')} placeholder="Выберите дату события" showTime onOk={onOk} />
+        <DatePicker value={note.deadline ? moment(new Date(note.deadline), 'YYYY-MM-DD, hh:mm') : null} placeholder="Выберите дату события" showTime onOk={onOk} />
       </div>
     </Modal>
   )
