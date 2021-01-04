@@ -14,7 +14,7 @@ const SearchSomefing = ({ searchHandler }) => {
   return (
     <Search
       allowClear
-      placeholder="Поиск..."
+      placeholder="Поиск по названию..."
       onSearch={onSearch}
       enterButton
       value={string}

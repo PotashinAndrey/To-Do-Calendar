@@ -44,9 +44,8 @@ function filtredNotes(toFilter, filters) {
   ) : filtredByName;
   const filtredByDate = filters.deadline ? filtredByCost.filter(
     e => {
-      return (e.deadline?.getMonth() <= filters.deadline?.getMonth() &&
-        e.deadline?.getDate() <= filters.deadline?.getDate() &&
-        e.deadline?.getFullYear() <= filters.deadline.getFullYear());
+      // console.log(e, filters, e.deadline?.split('T')[0].split('-').sort((a, b) => b - a).join() === filters.deadline?.toLocaleDateString().split('.').sort((a, b) => b -a).join())
+      return (e.deadline?.split('T')[0].split('-').sort((a, b) => b - a).join() === filters.deadline?.toLocaleDateString().split('.').sort((a, b) => b -a).join());
     }
   ) : filtredByCost;
   const filtredByPriority = filters.priority ? filtredByDate.filter(

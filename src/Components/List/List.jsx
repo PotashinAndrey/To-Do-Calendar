@@ -32,6 +32,7 @@ const List = ({ listType, filter, children }) => {
 
   const items = filters.filtration(sorted, filter)
     .map(e => <ListItem
+      key={e._id}
       onClick={itemClick}
       note={e}
       thirdProp={types[listType] === 'cost' ? e[types[listType]] : e[types[listType]]
