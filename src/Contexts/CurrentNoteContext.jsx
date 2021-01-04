@@ -9,7 +9,7 @@ const initialCurrentNoteState = {
 
 const currentNoteReducer = (state, action = initialCurrentNoteState) => {
   const data = { ...state, ...action };
-  console.log(data);
+  // console.log(data);
 
   return data;
 }

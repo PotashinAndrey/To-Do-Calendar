@@ -8,7 +8,7 @@ export default function Modal({ children, text = null, onClick, isOpen }) {
   const { Text } = Typography;
 
   function ok() {
-    okHandler();
+    // okHandler();
     onClick();
   }
 

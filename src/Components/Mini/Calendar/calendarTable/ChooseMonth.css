@@ -7,6 +7,8 @@
 
 .dateText {
   text-align: center;
+  display: grid;
+  align-content: center;
   height: 33px;
   outline: 1px solid #999;
   margin: 0;
