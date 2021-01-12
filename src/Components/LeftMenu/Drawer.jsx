@@ -3,26 +3,18 @@ import { useHistory } from 'react-router-dom';
 import { useHttp } from '../../Requests/useHttp.jsx';
 import useTokenContext from '../../Contexts/TokenContext.jsx';
 import Button from "antd-button-color";
+import { Typography } from 'antd';
 import './Drawer.css';
 
 export default function Drawer({ open }) {
-  const { tokenState, tokenDispatch } = useTokenContext();
-  const { loading, request } = useHttp();
+  const { tokenState } = useTokenContext();
+  const { loading } = useHttp();
 
   const classes = ["drawer"];
+  const { Title } = Typography;
 
   if (!open) {
     classes.push('close');
-  }
-
-  async function resposnceHandler(str, method, obj) {
-    try {
-      const data = await request(str, method, obj, { Authorization: tokenState.token });
-
-      // console.log(data);
-    } catch (e) {
-      console.log(e.message);
-    }
   }
 
   const history = useHistory();
@@ -33,19 +25,16 @@ export default function Drawer({ open }) {
 
   return (
     <nav className={classes.join(' ')}>
-      <ul>
-        <button text={'adwada'} onClick={() => resposnceHandler('/api/note/create', 'POST', {
-          name: 'Молоко',
-          discription: 'купить в магните',
-          deadline: new Date(),
-          cost: 123
-        })} />
-        <button text={'adwada'} onClick={() => resposnceHandler('/api/note/all', 'GET')} />
-        <button text={'adwada'} onClick={() => resposnceHandler('/api/note/change', 'POST', { noteId: '5fe0e0a69ff0724638a0f4e7', changes: { name: 'Хрен' } })} />
-        <button text={'adwada'} onClick={() => resposnceHandler('/api/note/delete', 'POST', { noteId: '5fe0e0a69ff0724638a0f4e7' })} />
-      </ul>
+      <div className="changeConstructorWrapper">
+        <Title level={4} style={{textAlign: "center"}}>Конструкторы</Title>
+        <Button loading={loading} type="primary" onClick={() => history.push('/purchases')} block>Долгосрочные покупки</Button>
+        <Button loading={loading} type="primary" block>Ежедненвные траты</Button>
+        <Button loading={loading} type="primary" block>Заметки</Button>
+        <Button loading={loading} type="primary" block>Дела</Button>
+        <Button loading={loading} type="primary" onClick={() => history.push('/')} block>Мини</Button>
+      </div>
 
-      <Button loading={loading} className="logout" type="primary" onClick={logoutHandler} >Выйти</Button>
+      <Button loading={loading} className="logout" type="danger" onClick={logoutHandler} >Выйти</Button>
     </nav>
   )
 }

@@ -31,7 +31,6 @@ const Mini = () => {
 
   return (
     <div className="wrapper">
-      <Menu />
       <div className="container">
         <Calendar className="C1-R1" />
         <MiniList className="C2-R1" />
