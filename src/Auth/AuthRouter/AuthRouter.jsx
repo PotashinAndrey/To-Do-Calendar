@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useToken } from '../Token/useToken.jsx';
+import { useHttp } from '../../Requests/useHttp.jsx';
 import { Route, Redirect } from 'react-router-dom';
 import useTokenContext from '../../Contexts/TokenContext.jsx';
 import ContextsWrapper from '../../Contexts/ContextsWrapper.jsx';
@@ -11,6 +12,7 @@ import Purchases from '../../Components/Purchases/Purchases.jsx';
 
 const AuthRouter = () => {
   const { token, login, logout, userId } = useToken();
+  const { request } = useHttp();
   const { tokenDispatch } = useTokenContext();
 
   useEffect(() => {
@@ -32,14 +34,15 @@ const AuthRouter = () => {
   ) : (
       <ContextsWrapper>
         <Menu />
+
         <Route path="/" exact>
-
           <Mini />
-
         </Route>
+
         <Route path='/purchases'>
           <Purchases />
         </Route>
+
         <Redirect to="/purchases" />
       </ContextsWrapper>
     );

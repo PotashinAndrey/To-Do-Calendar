@@ -1,0 +1,16 @@
+.purchasesHeaderWrapper {
+  display: grid;
+  grid-template-columns: 6fr 5fr 5fr 5fr;
+  justify-items: center;
+  align-items: center;
+  margin: 7px;
+}
+
+.purchasesHeaderWrapper > * {
+  /* margin: 0  */
+  margin: 5px 0 !important;
+}
+
+.purchasesHeaderName, .purchasesHeaderDis {
+  justify-self: start;
+}

@@ -5,3 +5,9 @@
   margin: 3px;
   box-shadow: 0 0 4px gray;
 }
+
+
+.purchasesListItems {
+  display: grid;
+  gap: 1px;
+}

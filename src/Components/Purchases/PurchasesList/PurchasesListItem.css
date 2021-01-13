@@ -1,0 +1,28 @@
+.PurchasesListItemWrapper {
+  /* display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between; */
+  display: grid;
+  grid-template-columns: 6fr 5fr 5fr 5fr;
+  /* justify-items:; */
+  align-items: center;
+  box-shadow: 0 0 2px gray;
+  margin: 4px;
+  padding: 6px;
+}
+
+.PurchasesListItemDeadline {
+  justify-self: end;
+}
+
+.low {
+  outline: 3px solid #1e1;
+}
+
+.medium {
+  outline: 3px solid #ee1;
+}
+
+.high {
+  outline: 3px solid #e11;
+}

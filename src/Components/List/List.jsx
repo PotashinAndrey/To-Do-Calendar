@@ -9,7 +9,7 @@ import './List.css';
 const List = ({ listType, filter, children }) => {
   const { notesState } = useNotesContext();
   const { currentNoteDispatch } = useCurrentNoteContext();
-  const { filtersState, filtersDispatch } = useFiltersContext();
+  const { filtersState } = useFiltersContext();
 
   function itemClick(note) {
     currentNoteDispatch({ currentNote: note });

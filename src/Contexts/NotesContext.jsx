@@ -3,14 +3,16 @@ import React, { useContext, useReducer } from 'react';
 const NotesContext = React.createContext();
 
 const initialNotesState = {
-  notes: []
+  notes: [],
+  purchases: [],
+
 }
 
 const notesReducer = (state, notes = initialNotesState) => {
 
   const data = { ...state, ...notes};
 
-  // console.log(data)
+  console.log(data)
   return data;
 
 }
