@@ -6,7 +6,7 @@ export default function Modal({ children, isOpen, closeHandler}) {
 
 
     return (
-      <div className="main" onClick={() => closeHandler()}>
+      <div className="main" onClick={closeHandler}>
         <div className="body" onClick={e => e.stopPropagation()} >
           {children}
         </div>

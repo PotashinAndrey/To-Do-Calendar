@@ -1,5 +1,7 @@
 .purchasesAddAndSearchWrapper {
   display: grid;
   grid-template-columns: 1fr min-content;
+  gap: 2px;
   margin: 3px;
+  box-shadow: 0 0 4px gray;
 }

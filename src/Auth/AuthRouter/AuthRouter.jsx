@@ -30,18 +30,18 @@ const AuthRouter = () => {
       <Redirect to="/login" />
     </>
   ) : (
-      <>
+      <ContextsWrapper>
         <Menu />
         <Route path="/" exact>
-          <ContextsWrapper>
-            <Mini />
-          </ContextsWrapper>
+
+          <Mini />
+
         </Route>
         <Route path='/purchases'>
           <Purchases />
         </Route>
         <Redirect to="/purchases" />
-      </>
+      </ContextsWrapper>
     );
 
   return (

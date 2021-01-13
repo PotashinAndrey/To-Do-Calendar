@@ -1,0 +1,17 @@
+.addPurchasesHeader {
+  display: grid;
+  grid-template-columns: 1fr min-content;
+}
+
+.agreeAndCancel {
+  display: grid;
+  margin-top: 40px;
+  grid-template-columns: min-content min-content;
+  justify-content: flex-end;
+  align-items: flex-end;
+  gap: 15px;
+}
+
+.addPurchasesBlock {
+  margin-bottom: 10px;
+}
