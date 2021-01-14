@@ -1,0 +1,17 @@
+.allInfoAboutPurchasesWrapper {
+  padding: 10px;
+  display: grid;
+}
+
+.allInfoAboutPurchasesPriority {
+  display: grid;
+
+}
+
+.allInfoAboutPurchasesPriority  > * {
+  margin: 0 !important;
+}
+
+.allInfoAboutPurchasesWrapper > *{
+  margin: 0 !important;
+}

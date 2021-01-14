@@ -10,7 +10,7 @@ import ListHeader from '../../List/ListHeader.jsx';
 import filters from './filters.js';
 
 const MiniList = ({ className }) => {
-  const { filtersState, filtersDispatch } = useFiltersContext();
+  const { filtersDispatch } = useFiltersContext();
 
   const [listType, setListType] = useState('doings');
   const [visible, setVisible] = useState(false);
