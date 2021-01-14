@@ -1,15 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import useNotesContext from '../../../Contexts/NotesContext.jsx';
-import { Typography, DatePicker, InputNumber, Checkbox } from 'antd';
+import useFiltersContext from '../../../Contexts/FiltersContext.jsx';
+import { DatePicker, InputNumber, Checkbox } from 'antd';
 import Button from "antd-button-color";
 import './PurchasesFilter.css';
 
 export default function PurchasesFilter({ className }) {
-  const { notesState } = useNotesContext();
+  const { filtersState, filtersDispatch } = useFiltersContext();
 
-  const [sum, setSum] = useState(notesState.purchases.reduce((accum, note) => accum + note.cost, 0));
-
-  const { h2 } = Typography;
   const { RangePicker } = DatePicker;
 
   const priorityOptions = [
@@ -22,6 +19,14 @@ export default function PurchasesFilter({ className }) {
     console.log('checked = ', checkedValues);
   }
 
+
+  function onChangeDateRange(value) {
+    console.log(value)
+  }
+
+  function applyFilters() {
+
+  }
 
 
   return (
@@ -44,7 +49,7 @@ export default function PurchasesFilter({ className }) {
 
       <div className="purchasesFilterBlock">
         <h2>Промежуток дедлайна: </h2>
-        <RangePicker />
+        <RangePicker onChange={e => onChangeDateRange(e)} />
       </div>
 
       <div className="PurchasesExistDeadlineFilter purchasesFilterBlock">
@@ -52,9 +57,14 @@ export default function PurchasesFilter({ className }) {
         <Checkbox checked={true} onChange={e => onChangeCheckbox(e.target.checked)}>Нет дедлайна</Checkbox>
       </div>
 
+      <div className="purchasesFilterBlock">
+        <h2>Выполненые: </h2>
+        <Checkbox onChange={e => onChangeCheckbox(e.target.checked)}>Нет дедлайна</Checkbox>
+      </div>
+
       <div className="PurchasesButtonsFilter purchasesFilterBlock">
         <Button>Сбросить</Button>
-        <Button type="primary">Применить</Button>
+        <Button type="primary" onClick={applyFilters}>Применить</Button>
       </div>
     </div>
   )
