@@ -11,7 +11,7 @@ export default function PurchasesHeader() {
       <Title className="purchasesHeaderName" level={5}>Название</Title>
       <Title className="purchasesHeaderDis" level={5}>Описание</Title>
       <Title level={5}>Цена</Title>
-      <Title level={5}>Дедлайн</Title>
+      <Title className="purchasesHeaderDeadline" level={5}>Дедлайн</Title>
     </div>
   )
 }

@@ -16,7 +16,7 @@ export default function AllInfoAboutPurchases({ className }) {
     <>
       <Title level={3}>Всего покупок: {notesState.purchases.length}</Title>
       <Title level={2}>
-        Общая сумма: {notesState.purchases.reduce((accumulator, currentValue) => accumulator + currentValue.cost, 0)}
+        Общая сумма: {notesState.purchases.reduce((accumulator, currentValue) => accumulator + currentValue.cost, 0)} руб
       </Title>
       <div className="allInfoAboutPurchasesPriority">
         <Title level={4}>Покупок с {<span style={{ color: '#e11' }}>высоким</span>} приоритетом: {notesState.purchases.reduce(reducer('high'), 0)}</Title>
