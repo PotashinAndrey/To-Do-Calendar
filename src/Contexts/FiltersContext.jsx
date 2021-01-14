@@ -1,3 +1,4 @@
+import { Result } from 'antd';
 import React, { useContext, useReducer } from 'react';
 import { act } from 'react-dom/test-utils';
 
@@ -11,17 +12,23 @@ const initialFiltersState = {
     priority: undefined,
     state: undefined,
     created: undefined
+  },
+  purchases: {
+    name: '',
+    cost: [null, null],
+    deadline: true,
+    range: [null, null],
+    priority: ["high", "medium", "low", 'none'],
+    state: ['todo']
   }
 }
 
 
 const filtersReducer = (state, action = initialFiltersState) => {
-  if (action.filters) {
-    const filters = { ...state.filters, ...action.filters }
+  if (action) {
+    const data = { ...state, ...action };
 
-    const data = { filters: filters };
-
-    // console.log(data);
+    console.log(data);
     return data;
   }
 
@@ -65,6 +72,30 @@ function filtredNotes(toFilter, filters) {
   return filtredByCreationTime;
 }
 
-export { FiltersContext, FiltersContextProvider, initialFiltersState, filtersReducer, filtredNotes }
+function filterPurchases(toFilter, filters) {
+  const filtredByName = toFilter.filter(e => e.name.toLowerCase().trim().includes(filters.name.trim().toLowerCase()));
+
+  const filtredByCost = filtredByName.filter(e => {
+    const result1 = filters.cost[0] ? e.cost >= filters.cost[0] : true;
+    const result2 = filters.cost[1] ? e.cost <= filters.cost[1] : true;
+    return result1 && result2;
+  });
+
+  const filtredByDeadline = filtredByCost.filter(e => filters.deadline || e.deadline);
+
+  const filtredByPriority = filtredByDeadline.filter(e => filters.priority.includes(e.priority === undefined ? 'none' : e.priority));
+
+  const filtredByRange = filtredByPriority.filter(e => {
+    const result1 = filters.range[0] ? (e.deadline ? new Date(e.deadline).getTime() >= filters.range[0].getTime() : true) : true;
+    const result2 = filters.range[1] ? (e.deadline ? new Date(e.deadline).getTime() <= filters.range[1].getTime() : true) : true;
+    return result1 && result2;
+  });
+
+  const filtredByState = filtredByRange.filter(e => filters.state.includes(e.state));
+
+  return filtredByState;
+}
+
+export { FiltersContext, FiltersContextProvider, initialFiltersState, filtersReducer, filtredNotes, filterPurchases }
 export default useFiltersContext;
 

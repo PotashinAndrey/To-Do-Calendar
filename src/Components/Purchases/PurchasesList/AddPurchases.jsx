@@ -49,7 +49,7 @@ export default function AddPurchases({ closeHandler, okHandler }) {
         <Input value={name} onChange={e => setName(e.target.value)} placeholder="Название..." />
       </div>
       <div className="addPurchasesBlock">
-        <Text>Описание: </Text>
+        <Text>Описание (не обязательно): </Text>
         <Input value={discription} onChange={e => setDiscription(e.target.value)} placeholder="Описание..." />
       </div>
       <div className="addPurchasesBlock">
@@ -57,7 +57,7 @@ export default function AddPurchases({ closeHandler, okHandler }) {
         <InputNumber value={cost} onChange={e => setCost(e)} placeholder='Стоимость...' min={0} style={{ width: '100%' }} />
       </div>
       <div className="addPurchasesBlock">
-        <Text>Приоритет: </Text>
+        <Text>Приоритет (не обязательно): </Text>
         <Select defaultValue={undefined} style={{ width: '100%' }} onChange={e => setPriority(e)} placeholder="Нет приоритета">
           <Option style={{ background: '#eee' }} value={undefined}>Нет приортитета</Option>
           <Option style={{ background: '#1e1' }} value={'low'}>Низкий</Option>

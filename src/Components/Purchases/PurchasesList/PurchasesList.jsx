@@ -9,11 +9,13 @@ import PurchasesListItem from './PurchasesListItem.jsx';
 import { useHttp } from '../../../Requests/useHttp.jsx';
 import PurchasesHeader from './PurchasesHeader.jsx';
 import useTokenContext from '../../../Contexts/TokenContext.jsx';
+import useFiltersContext, { filterPurchases } from '../../../Contexts/FiltersContext.jsx';
 import './PurchasesList.css';
 
 export default function PurchasesList({ className }) {
   const { request } = useHttp();
   const { notesState, notesDispatch } = useNotesContext();
+  const { filtersState, filtersDispatch } = useFiltersContext();
   const { tokenState } = useTokenContext();
   const [visible, setVisible] = useState(null);
 
@@ -41,10 +43,10 @@ export default function PurchasesList({ className }) {
   }
 
   function searchHandler(str) {
-    console.log(str)
+    filtersDispatch({ purchases: { ...filtersState.purchases, name: str } });
   }
 
-  const items = notesState.purchases.map(e => <PurchasesListItem key={e._id} purchaseNote={e} />);
+  const items = filterPurchases(notesState.purchases, filtersState.purchases).map(e => <PurchasesListItem key={e._id} purchaseNote={e} />);
 
   return (
     <>
