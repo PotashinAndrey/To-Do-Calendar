@@ -4,8 +4,7 @@ const NotesContext = React.createContext();
 
 const initialNotesState = {
   notes: [],
-  purchases: [],
-
+  purchases: []
 }
 
 const notesReducer = (state, notes = initialNotesState) => {

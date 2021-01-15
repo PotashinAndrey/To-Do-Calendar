@@ -44,14 +44,12 @@ const FiltersContextProvider = props => {
 const useFiltersContext = () => useContext(FiltersContext);
 
 function filtredNotes(toFilter, filters) {
-  // console.log(toFilter, filters);
   const filtredByName = toFilter.filter(e => e.name.toLowerCase().trim().includes(filters.name));
   const filtredByCost = filters.cost && filters.cost >= 0 ? filtredByName.filter(
     e => +e.cost <= +filters.cost
   ) : filtredByName;
   const filtredByDate = filters.deadline ? filtredByCost.filter(
     e => {
-      // console.log(e, filters, e.deadline?.split('T')[0].split('-').sort((a, b) => b - a).join() === filters.deadline?.toLocaleDateString().split('.').sort((a, b) => b -a).join())
       return (e.deadline?.split('T')[0].split('-').sort((a, b) => b - a).join() === filters.deadline?.toLocaleDateString().split('.').sort((a, b) => b -a).join());
     }
   ) : filtredByCost;
@@ -66,8 +64,6 @@ function filtredNotes(toFilter, filters) {
       e.created.getMonth() === filters.created.getMonth() &&
       e.created.getDate() === filters.created.getDate());
   }) : filtredByState;
-
-  // console.log(filtredByName);
 
   return filtredByCreationTime;
 }
