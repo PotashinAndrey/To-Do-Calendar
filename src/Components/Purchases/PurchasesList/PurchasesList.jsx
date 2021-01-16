@@ -48,7 +48,9 @@ export default function PurchasesList({ className }) {
 
   async function deleteHandler(id) {
     try {
-      await request('/delete', 'POST', { _id: id }, { Authorization: tokenState.token });
+      await request('/api/note/delete', 'POST', { noteId: id }, { Authorization: tokenState.token });
+
+      reloadData();
     } catch (e) {
       console.log(e.message)
     }
