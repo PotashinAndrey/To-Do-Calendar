@@ -1,14 +1,38 @@
 .PurchasesListItemWrapper {
-  /* display: flex;
-  flex-wrap: nowrap;
-  justify-content: space-between; */
+  position: relative;
   display: grid;
   grid-template-columns: 6fr 5fr 5fr 5fr;
-  /* justify-items:; */
-  align-items: center;
+  /* align-items: center; */
   box-shadow: 0 0 2px gray;
   margin: 4px;
   padding: 6px;
+  height: 44px;
+  transition: height 200ms ease-in;
+}
+
+.OpenPurchasesListItemWrapper {
+  position: relative;
+  /* display: grid; */
+  /* grid-template-columns: 6fr 5fr 5fr 5fr; */
+  /* align-items: center; */
+  box-shadow: 0 0 2px gray;
+  margin: 4px;
+  padding: 6px;
+  height: 155px;
+  transition: height 200ms ease-in;
+}
+
+/* .open {
+  height: 150px;
+} */
+
+.OpenPurchasesListItemBlock {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.OpenPurchasesListItemBlockLastItem {
+  justify-self: end;
 }
 
 .PurchasesListItemDeadline {

@@ -46,7 +46,21 @@ export default function PurchasesList({ className }) {
     filtersDispatch({ purchases: { ...filtersState.purchases, name: str } });
   }
 
-  const items = filterPurchases(notesState.purchases, filtersState.purchases).map(e => <PurchasesListItem key={e._id} purchaseNote={e} />);
+  async function deleteHandler(id) {
+    try {
+      await request('/delete', 'POST', { _id: id }, { Authorization: tokenState.token });
+    } catch (e) {
+      console.log(e.message)
+    }
+  }
+
+  const items = filterPurchases(notesState.purchases, filtersState.purchases).map(e =>
+    <PurchasesListItem
+      key={e._id}
+      purchaseNote={e}
+      deleteHandler={deleteHandler}
+    />
+  );
 
   return (
     <>

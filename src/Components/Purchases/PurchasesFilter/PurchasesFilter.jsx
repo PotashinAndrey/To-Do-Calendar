@@ -35,8 +35,8 @@ export default function PurchasesFilter({ className }) {
 
   function throwOff() {
     setFilter({
-    name: '',
-    cost: [null, null],
+      name: '',
+      cost: [null, null],
       deadline: true,
       range: [null, null],
       priority: ["high", "medium", "low", 'none'],
@@ -52,19 +52,21 @@ export default function PurchasesFilter({ className }) {
   }
 
   function onChangeStateCheckbox(checkedValues) {
-    setFilter({...filter, state: checkedValues})
+    setFilter({ ...filter, state: checkedValues })
   }
 
   function onChangeDateRange(value) {
     console.log(value[0].toDate())
-    setFilter({...filter, range: [value[0].toDate(), value[1].toDate()]})
+    setFilter({ ...filter, range: [value[0].toDate(), value[1].toDate()] })
   }
 
   function applyFilters() {
-    const newFilter = {...filter, deadline, cost: cost.slice().map(e => e < 0 ? null : e).sort((a, b) => a ? a : 0 - b ? b : 0)};
+    const newFilter = { ...filter, deadline, cost: cost.slice()
+      .map(e => e < 0 ? null : e)
+      .sort((a, b) => a ? a : 0 - b ? b : 0) };
 
     setFilter(newFilter)
-    filtersDispatch({purchases: newFilter});
+    filtersDispatch({ purchases: newFilter });
   }
 
 
@@ -74,32 +76,60 @@ export default function PurchasesFilter({ className }) {
 
       <div className="purchasesFilterBlock">
         <h2>Приортет: </h2>
-        <Checkbox.Group options={priorityOptions} defaultValue={["high", "medium", "low", 'none']} value={filter.priority} onChange={onChangeCheckbox} />
+        <Checkbox.Group
+          options={priorityOptions}
+          defaultValue={["high", "medium", "low", 'none']}
+          value={filter.priority}
+          onChange={onChangeCheckbox}
+        />
       </div>
 
       <div className="purchasesFilterBlock">
         <h2>Диапазон стоимости: </h2>
         <div className="PurchasesCostFilter">
           <p>Стоимость от: </p>
-          <InputNumber value={cost[0]} className="PurchasesCostFilterInputNumber" onChange={value => setCost([value, cost[1]])} />
+          <InputNumber
+            placeholder="минимальная"
+            value={cost[0]}
+            className="PurchasesCostFilterInputNumber"
+            onChange={value => setCost([value, cost[1]])} />
           <p>{` до `}</p>
-          <InputNumber value={cost[1]} className="PurchasesCostFilterInputNumber" onChange={value => setCost([cost[0], value])} />
+          <InputNumber
+            placeholder="максимальная"
+            value={cost[1]}
+            className="PurchasesCostFilterInputNumber"
+            onChange={value => setCost([cost[0], value])} />
         </div>
       </div>
 
       <div className="purchasesFilterBlock">
         <h2>Промежуток дедлайна: </h2>
-        <RangePicker value={[ filter.range[0] ?  moment(new Date(filter.range[0])) : null, filter.range[1] ? moment(new Date(filter.range[1])) : null]} onChange={e => onChangeDateRange(e)} />
+        <RangePicker
+          placeholder={['Не раньше', 'Не позже']}
+          value={[
+            filter.range[0] ? moment(new Date(filter.range[0])) : null,
+            filter.range[1] ? moment(new Date(filter.range[1])) : null
+          ]}
+          onChange={e => onChangeDateRange(e)}
+        />
       </div>
 
       <div className="PurchasesExistDeadlineFilter purchasesFilterBlock">
         <h2>Дедлайн: </h2>
-        <Checkbox checked={deadline} onChange={e => setDeadline(e.target.checked)}>Нет дедлайна</Checkbox>
+        <Checkbox
+          checked={deadline}
+          onChange={e => setDeadline(e.target.checked)}
+        >Нет дедлайна</Checkbox>
       </div>
 
       <div className="purchasesFilterBlock purchasesFilterState">
         <h2>Состояние: </h2>
-        <Checkbox.Group options={stateOption} defaultValue={["todo"]} value={filter.state} onChange={onChangeStateCheckbox} />
+        <Checkbox.Group
+          options={stateOption}
+          defaultValue={["todo"]}
+          value={filter.state}
+          onChange={onChangeStateCheckbox}
+        />
       </div>
 
       <div className="PurchasesButtonsFilter purchasesFilterBlock">
