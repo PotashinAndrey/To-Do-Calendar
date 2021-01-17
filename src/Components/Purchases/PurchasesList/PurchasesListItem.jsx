@@ -53,12 +53,14 @@ export default function PurchasesListItem({ purchaseNote, deleteHandler }) {
         </Text>
       </div>
 
-      <Text>Описание: </Text>
-      {purchaseNote.discription?.length ?
-        <Text style={{overflowWrap: 'anywhere'}}>
-          {purchaseNote.discription}
-        </Text> :
-        <Text type="secondary"> Нет описания</Text>}
+      <div style={{height: '44px'}}>
+        <Text>Описание: </Text>
+        {purchaseNote.discription?.length ?
+          <Text style={{ overflowWrap: 'anywhere' }}>
+            {purchaseNote.discription}
+          </Text> :
+          <Text type="secondary"> Нет описания</Text>}
+      </div>
 
       <div className="OpenPurchasesListItemBlock">
         <Text>Приоритет: {priority[purchaseNote.priority]}</Text>
@@ -73,10 +75,10 @@ export default function PurchasesListItem({ purchaseNote, deleteHandler }) {
       </div>
 
       <div
-      style={{position: 'absolute', bottom: '10px', right: '15px', display: 'flex', gap: '5px'}}
-      onClick={(e) => {
-        e.stopPropagation();
-      }}
+        style={{ position: 'absolute', bottom: '10px', right: '15px', display: 'flex', gap: '5px' }}
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
       >
         <Button onClick={() => deleteHandler(purchaseNote._id)}>Удалить</Button>
         <Button>Изменить</Button>

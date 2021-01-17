@@ -76,7 +76,6 @@ function filterPurchases(toFilter, filters) {
     const result2 = filters.cost[1] ? e.cost <= filters.cost[1] : true;
     return result1 && result2;
   });
-
   const filtredByDeadline = filtredByCost.filter(e => filters.deadline || e.deadline);
 
   const filtredByPriority = filtredByDeadline.filter(e => filters.priority.includes(e.priority === undefined ? 'none' : e.priority));
@@ -89,6 +88,7 @@ function filterPurchases(toFilter, filters) {
 
   const filtredByState = filtredByRange.filter(e => filters.state.includes(e.state));
 
+  // console.log(filtredByName, filtredByCost, filtredByDeadline, filtredByPriority, filtredByRange, filtredByState);
   return filtredByState;
 }
 

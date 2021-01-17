@@ -13,7 +13,7 @@
 .OpenPurchasesListItemWrapper {
   position: relative;
   /* display: grid; */
-  /* grid-template-columns: 6fr 5fr 5fr 5fr; */
+  /* grid-template-rows: 1fr 1fr 2fr 1fr 20fr; */
   /* align-items: center; */
   box-shadow: 0 0 2px gray;
   margin: 4px;
