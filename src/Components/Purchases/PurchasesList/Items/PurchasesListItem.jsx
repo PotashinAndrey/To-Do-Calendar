@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
 import { Typography } from 'antd';
 import Button from "antd-button-color";
+import Portal from '../../../../Portal/Portal.jsx';
+import Modal from '../../../Modal/Modal.jsx';
+import EditPurchases from '../EditPurchases/EditPurchases.jsx';
 import './PurchasesListItem.css';
 
-export default function PurchasesListItem({ purchaseNote, deleteHandler }) {
+export default function PurchasesListItem({ purchaseNote, deleteHandler, addChildrentPurchase }) { //!
   const [open, setOpen] = useState(false);
+  const [change, setChange] = useState(null);
 
   const { Text, Title } = Typography;
 
@@ -41,6 +45,15 @@ export default function PurchasesListItem({ purchaseNote, deleteHandler }) {
     </>
   )
 
+  function changePurchasesHadnler() {
+    setChange(
+      <Portal id="root">
+        <Modal isOpen={true} closeHandler={() => setChange(null)}>
+          <EditPurchases purchase={purchaseNote} closeHandler={() => setChange(null)} />
+        </Modal>
+      </Portal>
+    )
+  }
 
   const opened = (
     <>
@@ -53,7 +66,7 @@ export default function PurchasesListItem({ purchaseNote, deleteHandler }) {
         </Text>
       </div>
 
-      <div style={{height: '44px'}}>
+      <div style={{ height: '44px' }}>
         <Text>Описание: </Text>
         {purchaseNote.discription?.length ?
           <Text style={{ overflowWrap: 'anywhere' }}>
@@ -80,8 +93,9 @@ export default function PurchasesListItem({ purchaseNote, deleteHandler }) {
           e.stopPropagation();
         }}
       >
+        <Button>Добавить подзадачу</Button>
         <Button onClick={() => deleteHandler(purchaseNote._id)}>Удалить</Button>
-        <Button>Изменить</Button>
+        <Button onClick={changePurchasesHadnler} >Изменить</Button>
       </div>
     </>
   )
@@ -92,6 +106,7 @@ export default function PurchasesListItem({ purchaseNote, deleteHandler }) {
       onClick={() => setOpen(!open)}
     >
       {open ? opened : closed}
+      {change}
     </div>
   )
 }

@@ -19,7 +19,7 @@
   margin: 4px;
   padding: 6px;
   height: 155px;
-  transition: height 200ms ease-in;
+  transition: height 150ms ease-in;
 }
 
 /* .open {

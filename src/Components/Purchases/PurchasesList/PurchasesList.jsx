@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import useNotesContext from '../../../Contexts/NotesContext.jsx';
 import Search from '../../Search/Search.jsx';
-import AddPurchases from './AddPurchases.jsx';
+import AddPurchases from './AddPurchases/AddPurchases.jsx';
 import Button from "antd-button-color";
 import Portal from '../../../Portal/Portal.jsx';
 import Modal from '../../Modal/Modal.jsx';
-import PurchasesListItem from './PurchasesListItem.jsx';
+import PurchasesListItem from './Items/PurchasesListItem.jsx';
 import { useHttp } from '../../../Requests/useHttp.jsx';
-import PurchasesHeader from './PurchasesHeader.jsx';
+import PurchasesHeader from './Items/PurchasesHeader.jsx';
 import useTokenContext from '../../../Contexts/TokenContext.jsx';
 import useFiltersContext, { filterPurchases } from '../../../Contexts/FiltersContext.jsx';
 import './PurchasesList.css';
@@ -61,6 +61,7 @@ export default function PurchasesList({ className }) {
       key={e._id}
       purchaseNote={e}
       deleteHandler={deleteHandler}
+      addChildrentPurchase={addPurchaseHandler} //!!
     />
   );
 

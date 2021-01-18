@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import useTokenContext from '../../../Contexts/TokenContext.jsx';
+import useTokenContext from '../../../../Contexts/TokenContext.jsx';
 import { Typography, InputNumber, Input, Select, DatePicker } from 'antd';
 import Button from "antd-button-color";
 import { CloseOutlined } from '@ant-design/icons';
-import { useHttp } from '../../../Requests/useHttp.jsx';
+import { useHttp } from '../../../../Requests/useHttp.jsx';
 import './AddPurchases.css';
 
-export default function AddPurchases({ closeHandler, okHandler }) {
+export default function AddPurchases({ closeHandler, okHandler, parent = null }) { //!!
   const { tokenState } = useTokenContext();
   const { loading, request } = useHttp();
 
