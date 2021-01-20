@@ -6,7 +6,7 @@
 }
 
 .open {
-  transition: height 150ms ease-in;
+  transition: height 200ms ease-in;
   /* height: 155px; */
 }
 

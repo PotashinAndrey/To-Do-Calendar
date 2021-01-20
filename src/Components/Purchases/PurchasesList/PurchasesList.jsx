@@ -28,10 +28,14 @@ export default function PurchasesList({ className }) {
   }
 
   async function reloadData() {
-    const data = await request('/api/note/all', 'GET', null, { Authorization: tokenState.token });
-    const purchases = data.filter(e => e.type === 'purchases')
+    try {
+      const data = await request('/api/note/all', 'GET', null, { Authorization: tokenState.token });
+      const purchases = data.filter(e => e.type === 'purchases')
 
-    notesDispatch({ purchases: purchases })
+      notesDispatch({ purchases: purchases })
+    } catch (e) {
+      console.log(e.message)
+    }
   }
 
   function addPurchaseHandler() {
@@ -46,9 +50,28 @@ export default function PurchasesList({ className }) {
     filtersDispatch({ purchases: { ...filtersState.purchases, name: str } });
   }
 
-  async function deleteHandler(id) {
+  async function doneHandler(purchaseNote) {
+    if (!purchaseNote.children) return;
+
+    try {
+      await request('/api/note/change', 'POST', { noteId: purchaseNote._id, changes: { state: 'done', priority: 'none' } }, { Authorization: tokenState.token });
+
+      purchaseNote.children.forEach(async (e) => {
+          await request('/api/note/change', 'POST', { noteId: e, changes: { state: 'done', priority: 'none' } }, { Authorization: tokenState.token });
+
+      });
+
+      reloadData();
+    } catch (e) {
+      console.log(e.message);
+    }
+  }
+
+  async function deleteHandler(id, children = []) {
     try {
       await request('/api/note/delete', 'POST', { noteId: id }, { Authorization: tokenState.token });
+
+      children.forEach(async (e) => await request('/api/note/delete', 'POST', { noteId: e }, { Authorization: tokenState.token }))
 
       reloadData();
     } catch (e) {
@@ -57,15 +80,15 @@ export default function PurchasesList({ className }) {
   }
 
   const items = filterPurchases(notesState.purchases, filtersState.purchases)
-  .filter(e => !e.parent)
-  .map(e =>
-    <PurchasesListItem
-      key={e._id}
-      purchaseNote={e}
-      deleteHandler={deleteHandler}
-      addChildrentPurchase={addPurchaseHandler} //!!
-    />
-  );
+    .filter(e => !e.parent)
+    .map(e =>
+      <PurchasesListItem
+        key={e._id}
+        purchaseNote={e}
+        deleteHandler={deleteHandler}
+        doneHandler={doneHandler}
+      />
+    );
 
   return (
     <>

@@ -5,18 +5,19 @@ import Portal from '../../../../Portal/Portal.jsx';
 import Modal from '../../../Modal/Modal.jsx';
 import EditPurchases from '../EditPurchases/EditPurchases.jsx';
 import AddSubPurchases from '../AddPurchases/AddSubPurchases.jsx';
+import SubPurchasesList from '../SubPurchasesList/SubPurchasesList.jsx';
 import './PurchasesListItem.css';
 
-export default function PurchasesListItem({ purchaseNote, deleteHandler, addChildrentPurchase }) { //!
+export default function PurchasesListItem({ purchaseNote, deleteHandler, doneHandler }) {
   const [open, setOpen] = useState(false);
   const [visible, setVisible] = useState(null);
 
   const { Text, Title } = Typography;
 
-  const styles = [purchaseNote.priority, 'PurchasesListItemWrapper']
+  const styles = [purchaseNote.priority, 'PurchasesListItemWrapper', purchaseNote.state === 'done' ? 'crossedOut' : null]
   open ? styles.push('open') : styles.push('close')
 
-  const childrens = purchaseNote.children ? purchaseNote.children.length : 0 ;
+  const childrens = purchaseNote.children ? purchaseNote.children.length : 0;
 
   const priority = {
     high: 'высокий',
@@ -24,7 +25,6 @@ export default function PurchasesListItem({ purchaseNote, deleteHandler, addChil
     low: 'низкий',
     none: 'не указан'
   }
-
 
   function changePurchasesHadnler() {
     setVisible(
@@ -100,23 +100,33 @@ export default function PurchasesListItem({ purchaseNote, deleteHandler, addChil
         </div>
       </div>
 
+      {
+        purchaseNote.children && !!purchaseNote.children.length ?
+          <div style={{ marginTop: '5px' }} onClick={e => e.stopPropagation()}>
+            <Text>Подзадачи: </Text>
+            <SubPurchasesList parent={purchaseNote} state={purchaseNote.state} />
+          </div>
+          : null
+      }
+
+
       <div
         style={{ position: 'absolute', bottom: '10px', right: '15px', display: 'flex', gap: '5px' }}
         onClick={(e) => {
           e.stopPropagation();
         }}
       >
-        <Button>Купленно</Button>
-        <Button onClick={addSubPurchases}>Добавить подзадачу</Button>
-        <Button onClick={() => deleteHandler(purchaseNote._id)}>Удалить</Button>
-        <Button onClick={changePurchasesHadnler} >Изменить</Button>
+        <Button disabled={purchaseNote.state === 'done'} onClick={() => doneHandler(purchaseNote)}>Купленно</Button>
+        <Button disabled={purchaseNote.state === 'done'} onClick={addSubPurchases}>Добавить подзадачу</Button>
+        <Button onClick={() => deleteHandler(purchaseNote._id, purchaseNote.children)}>Удалить</Button>
+        <Button disabled={purchaseNote.state === 'done'} onClick={changePurchasesHadnler} >Изменить</Button>
       </div>
     </>
   )
 
   return (
     <div
-      style={ open ? {height: 155 + 46 * childrens + 'px' } : {height: '44px'}}
+      style={open ? { height: 155 + (purchaseNote.children && !!purchaseNote.children.length ? 45 : 0) + 46 * childrens + 'px' } : { height: '44px' }}
       className={styles.join(' ')}
       onClick={() => setOpen(!open)}
     >

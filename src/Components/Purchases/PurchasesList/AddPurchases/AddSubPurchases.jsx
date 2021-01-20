@@ -14,7 +14,7 @@ export default function AddSubPurchases({ closeHandler, parent }) {
       const children = parent.children && parent.children.length > 0 ? [...parent.children, childrenId] : [childrenId];
       await request('/api/note/change', 'POST', { noteId: parent._id, changes: { children } }, { Authorization: tokenState.token });
 
-      reloadData()
+      reloadData();
     } catch (e) {
       console.log(e.message);
     }
@@ -33,6 +33,11 @@ export default function AddSubPurchases({ closeHandler, parent }) {
   }
 
   return (
-    <AddPurchases closeHandler={closeHandler} okHandler={okHandler} parent={parent._id} />
+    <AddPurchases
+      closeHandler={closeHandler}
+      okHandler={okHandler}
+      parent={parent._id}
+      deadline={false}
+    />
   )
 }

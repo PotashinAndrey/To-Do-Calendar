@@ -4,7 +4,7 @@ import { useHttp } from '../../../../Requests/useHttp.jsx';
 import PurchasesForm from '../PurchasesForm/PurchasesForm.jsx';
 import './AddPurchases.css';
 
-export default function AddPurchases({ closeHandler, okHandler, parent = null }) { //!!
+export default function AddPurchases({ closeHandler, okHandler, parent = null, deadline = true }) {
   const { tokenState } = useTokenContext();
   const { loading, request } = useHttp();
 
@@ -28,6 +28,7 @@ export default function AddPurchases({ closeHandler, okHandler, parent = null })
       okHandler={createHandler}
       loading={loading}
       text={{ header: 'Создание покупки', ok: 'Создать' }}
+      deadline={deadline}
     />
   )
 }

@@ -14,7 +14,7 @@ const defaultNote = {
 }
 
 
-export default function PurchasesForm({ note = defaultNote, closeHandler, okHandler, text, loading }) {
+export default function PurchasesForm({ note = defaultNote, closeHandler, okHandler, text, loading, deadline = true }) {
   const [purchase, setPurchase] = useState(note);
 
   const { Title, Text } = Typography;
@@ -69,14 +69,16 @@ export default function PurchasesForm({ note = defaultNote, closeHandler, okHand
           <Option style={{ background: '#e11' }} value={'high'}>Высокий</Option>
         </Select>
       </div>
-      <div className="addPurchasesBlock">
-        <Text>Дата покупки (не обязательно): </Text>
-        <DatePicker
-          value={purchase.deadline ? moment(new Date(purchase.deadline)) : null}
-          placeholder="Выберите дату..."
-          onChange={moment => { setPurchase({ ...purchase, deadline: moment.toDate() }) }}
-        />
-      </div>
+      { deadline ?
+        <div className="addPurchasesBlock">
+          <Text>Дата покупки (не обязательно): </Text>
+          <DatePicker
+            value={purchase.deadline ? moment(new Date(purchase.deadline)) : null}
+            placeholder="Выберите дату..."
+            onChange={moment => { setPurchase({ ...purchase, deadline: moment.toDate() }) }}
+          />
+        </div> : null
+      }
       <div className='agreeAndCancel addPurchasesBlock'>
         <Button disabled={loading} onClick={closeHandler} >Отменна</Button>
         <Button disabled={loading} onClick={() => okHandler(purchase)} type="primary">{text.ok}</Button>

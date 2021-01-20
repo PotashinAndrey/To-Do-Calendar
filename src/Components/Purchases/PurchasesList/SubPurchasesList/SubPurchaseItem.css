@@ -1,0 +1,14 @@
+.subPurchaseItemOpen {
+  display: grid;
+  grid-template-columns: 2fr 2fr 2fr 1fr;
+  gap: 5px;
+}
+
+.subPurchaseItemClose {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.crossedOut {
+  text-decoration: line-through;
+}
