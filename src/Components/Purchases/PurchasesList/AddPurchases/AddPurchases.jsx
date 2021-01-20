@@ -11,11 +11,14 @@ export default function AddPurchases({ closeHandler, okHandler, parent = null })
   async function createHandler(note) {
     if (!note.name.length || !note.cost) return;
 
-    console.log(note)
+    try {
+      const data = await request('/api/note/create', 'POST', { ...note, parent }, { Authorization: tokenState.token });
 
-    await request('/api/note/create', 'POST', note, { Authorization: tokenState.token });
+      okHandler(data.noteId);
+    } catch (e) {
+      console.log(e.message)
+    }
 
-    okHandler(note);
     closeHandler();
   }
 
@@ -24,7 +27,7 @@ export default function AddPurchases({ closeHandler, okHandler, parent = null })
       closeHandler={closeHandler}
       okHandler={createHandler}
       loading={loading}
-      text={{header: 'Создание покупки', ok: 'Создать'}}
+      text={{ header: 'Создание покупки', ok: 'Создать' }}
     />
   )
 }

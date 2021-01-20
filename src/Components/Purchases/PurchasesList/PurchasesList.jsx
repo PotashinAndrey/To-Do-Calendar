@@ -56,7 +56,9 @@ export default function PurchasesList({ className }) {
     }
   }
 
-  const items = filterPurchases(notesState.purchases, filtersState.purchases).map(e =>
+  const items = filterPurchases(notesState.purchases, filtersState.purchases)
+  .filter(e => !e.parent)
+  .map(e =>
     <PurchasesListItem
       key={e._id}
       purchaseNote={e}

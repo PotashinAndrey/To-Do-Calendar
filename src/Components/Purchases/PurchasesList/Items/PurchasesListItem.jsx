@@ -4,24 +4,46 @@ import Button from "antd-button-color";
 import Portal from '../../../../Portal/Portal.jsx';
 import Modal from '../../../Modal/Modal.jsx';
 import EditPurchases from '../EditPurchases/EditPurchases.jsx';
+import AddSubPurchases from '../AddPurchases/AddSubPurchases.jsx';
 import './PurchasesListItem.css';
 
 export default function PurchasesListItem({ purchaseNote, deleteHandler, addChildrentPurchase }) { //!
   const [open, setOpen] = useState(false);
-  const [change, setChange] = useState(null);
+  const [visible, setVisible] = useState(null);
 
   const { Text, Title } = Typography;
 
-  const style = {
-    open: 'OpenPurchasesListItemWrapper',
-    close: 'PurchasesListItemWrapper'
-  }
+  const styles = [purchaseNote.priority, 'PurchasesListItemWrapper']
+  open ? styles.push('open') : styles.push('close')
+
+  const childrens = purchaseNote.children ? purchaseNote.children.length : 0 ;
 
   const priority = {
     high: 'высокий',
     medium: 'средний',
     low: 'низкий',
     none: 'не указан'
+  }
+
+
+  function changePurchasesHadnler() {
+    setVisible(
+      <Portal id="root">
+        <Modal isOpen={true} closeHandler={() => setVisible(null)}>
+          <EditPurchases purchase={purchaseNote} closeHandler={() => setVisible(null)} />
+        </Modal>
+      </Portal>
+    )
+  }
+
+  function addSubPurchases() {
+    setVisible(
+      <Portal id="root">
+        <Modal isOpen={true} closeHandler={() => setVisible(null)}>
+          <AddSubPurchases closeHandler={() => setVisible(null)} parent={purchaseNote} />
+        </Modal>
+      </Portal>
+    )
   }
 
   const closed = (
@@ -45,15 +67,6 @@ export default function PurchasesListItem({ purchaseNote, deleteHandler, addChil
     </>
   )
 
-  function changePurchasesHadnler() {
-    setChange(
-      <Portal id="root">
-        <Modal isOpen={true} closeHandler={() => setChange(null)}>
-          <EditPurchases purchase={purchaseNote} closeHandler={() => setChange(null)} />
-        </Modal>
-      </Portal>
-    )
-  }
 
   const opened = (
     <>
@@ -93,7 +106,8 @@ export default function PurchasesListItem({ purchaseNote, deleteHandler, addChil
           e.stopPropagation();
         }}
       >
-        <Button>Добавить подзадачу</Button>
+        <Button>Купленно</Button>
+        <Button onClick={addSubPurchases}>Добавить подзадачу</Button>
         <Button onClick={() => deleteHandler(purchaseNote._id)}>Удалить</Button>
         <Button onClick={changePurchasesHadnler} >Изменить</Button>
       </div>
@@ -102,11 +116,12 @@ export default function PurchasesListItem({ purchaseNote, deleteHandler, addChil
 
   return (
     <div
-      className={(open ? style.open : style.close) + ' ' + purchaseNote.priority}
+      style={ open ? {height: 155 + 46 * childrens + 'px' } : {height: '44px'}}
+      className={styles.join(' ')}
       onClick={() => setOpen(!open)}
     >
       {open ? opened : closed}
-      {change}
+      {visible}
     </div>
   )
 }

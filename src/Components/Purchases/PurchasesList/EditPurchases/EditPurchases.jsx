@@ -23,10 +23,12 @@ export default function EditPurchases({ purchase, closeHandler }) {
 
   async function changeHandler(note) {
     if (!note.name.length || !note.cost) return;
+    if (!changed(purchase, note)) {
+      closeHandler();
+      return;
+    }
 
-    console.log(note)
-
-    await request('/api/note/change', 'POST',  {noteId: note._id, changes: note}, { Authorization: tokenState.token });
+    await request('/api/note/change', 'POST', { noteId: note._id, changes: note }, { Authorization: tokenState.token });
 
     okHandler();
     closeHandler();
@@ -41,4 +43,14 @@ export default function EditPurchases({ purchase, closeHandler }) {
       text={{ header: 'Изменение покупки', ok: 'Изменить' }}
     />
   )
+}
+
+function changed(note1, note2) {
+  const name = note1.name === note2.name;
+  const discription = note1.discription === note2.discription;
+  const cost = note1.cost === note2.cost;
+  const deadline = note1.deadline === note2.deadline;
+  const priority = note1.priority === note2.priority;
+
+  return !name || !discription || !cost || !deadline || !priority;
 }
