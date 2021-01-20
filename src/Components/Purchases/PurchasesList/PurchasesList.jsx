@@ -61,10 +61,11 @@ export default function PurchasesList({ className }) {
 
       });
 
-      reloadData();
     } catch (e) {
       console.log(e.message);
     }
+
+    await reloadData();
   }
 
   async function deleteHandler(id, children = []) {
