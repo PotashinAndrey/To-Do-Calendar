@@ -52,7 +52,7 @@ export default function AllInfoAboutPurchases({ className }) {
     <>
       <Title level={3}>Покупок: {filtredPurchases.filter(e => e.state === 'todo').length} из {notesState.purchases.filter(e => e.state === 'todo').length} </Title>
       <Title level={2}>
-        Общая сумма: {filtredPurchases.reduce((accumulator, currentValue) => accumulator + currentValue.cost, 0)} руб
+        Общая сумма: {filtredPurchases.filter(e => e.state === 'todo').reduce((accumulator, currentValue) => accumulator + currentValue.cost, 0)} руб
       </Title>
       <div className="allInfoAboutPurchasesPriority">
         <Title
