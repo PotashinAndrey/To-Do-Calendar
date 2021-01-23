@@ -28,7 +28,7 @@ export default function Drawer({ open }) {
       <div className="changeConstructorWrapper">
         <Title level={4} style={{textAlign: "center"}}>Конструкторы</Title>
         <Button loading={loading} type="primary" onClick={() => history.push('/purchases')} block>Долгосрочные покупки</Button>
-        <Button loading={loading} type="primary" block>Ежедненвные траты</Button>
+        <Button loading={loading} type="primary" onClick={() => history.push('/dailyspending')} block>Ежедненвные траты</Button>
         <Button loading={loading} type="primary" block>Заметки</Button>
         <Button loading={loading} type="primary" block>Дела</Button>
         <Button loading={loading} type="primary" onClick={() => history.push('/')} block>Мини</Button>

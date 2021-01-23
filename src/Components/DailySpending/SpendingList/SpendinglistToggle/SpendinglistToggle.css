@@ -1,0 +1,6 @@
+.spendingListTogle-radiogroup {
+  display: grid !important;
+  width: 100%;
+  grid-template-columns: 1fr 1fr;
+}
+

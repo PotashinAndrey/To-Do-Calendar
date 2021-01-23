@@ -21,7 +21,9 @@ const List = ({ listType, filter, children }) => {
     notes: "created"
   }
 
-  let sorted = filtredNotes(notesState.notes.slice(), filtersState.filters);
+  let sorted = notesState.notes;
+  // let sorted = filtredNotes(notesState.notes.slice(), filtersState.filters);//!!!
+  // console.log(filters)
   sorted.sort((a, b) => {
     const compare = a[types[listType]] === undefined ? '0' : a[types[listType]];
     const compareb = b[types[listType]] === undefined ? '0' : b[types[listType]];

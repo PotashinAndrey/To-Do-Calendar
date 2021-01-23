@@ -1,7 +1,5 @@
 import React from 'react';
 import { Typography } from 'antd';
-// import Typography from '@material-ui/core/Typography';
-// import Container from '@material-ui/core/Container';
 import './Item.css';
 
 export default function Item({ day, month, onClick, active, current = false }) {

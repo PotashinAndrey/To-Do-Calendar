@@ -1,0 +1,17 @@
+.DailySpendingWrapper {
+  display: grid;
+  justify-content: center;
+}
+
+.DailySpendingContainer {
+  display: grid;
+
+  width: 1100px;
+  box-shadow: 0 0 5px gray;
+  grid-template-columns: 3fr 5fr;
+  grid-template-rows: 4fr 3fr 3fr;
+  grid-template-areas:"C1-R1 C2-R1"
+                      "C1-R2 C2-R1"
+                      "C1-R2 C2-R1";
+  grid-gap: 5px;
+}

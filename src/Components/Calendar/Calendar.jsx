@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import Grid from './calendarTable/Grid.jsx'
-import useFiltersContext from '../../../Contexts/FiltersContext.jsx';
+import useFiltersContext from '../../Contexts/FiltersContext.jsx';
 import ChooseMonth from './calendarTable/ChooseMonth.jsx';
 import Button from "antd-button-color";
 import { Switch } from 'antd';
 import './Calendar.css';
 
 const Calendar = ({ className }) => {
-  const { filtersState, filtersDispatch } = useFiltersContext();
+  const { filtersDispatch } = useFiltersContext();
 
   const [month, setMonth] = useState(new Date().getMonth());
   const [activeDate, setActiveDate] = useState(new Date());

@@ -9,6 +9,7 @@ import Registration from "../../Components/Auth/Registration.jsx";
 import Mini from '../../Components/Mini/Mini.jsx';
 import Menu from '../../Components/LeftMenu/Menu.jsx';
 import Purchases from '../../Components/Purchases/Purchases.jsx';
+import DailySpending from '../../Components/DailySpending/DailySpending.jsx';
 
 const AuthRouter = () => {
   const { token, login, logout, userId } = useToken();
@@ -43,7 +44,11 @@ const AuthRouter = () => {
           <Purchases />
         </Route>
 
-        <Redirect to="/purchases" />
+        <Route path='/dailyspending'>
+          <DailySpending />
+        </Route>
+
+        <Redirect to="/dailyspending" />
       </ContextsWrapper>
     );
 

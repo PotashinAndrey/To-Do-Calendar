@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
-import Menu from "../LeftMenu/Menu.jsx";
-import Calendar from "./Calendar/Calendar.jsx";
+import Calendar from "../Calendar/Calendar.jsx";
 import Info from "./Info/Info.jsx";
 import MiniList from "./MiniList/MiniList.jsx";
 import { useHttp } from '../../Requests/useHttp.jsx';
